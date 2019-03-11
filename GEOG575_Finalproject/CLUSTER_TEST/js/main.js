@@ -1,6 +1,3 @@
-var count = 0;
-var count2 = 0;
-
 var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
 		id: 'mapbox.streets',
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
@@ -40,45 +37,24 @@ function createMap() {
 
 
 
-function getData(map) {
-	//load the data
-	$.ajax("data/Florida_NAS.json", {
-		dataType: "json",
-		success: function(response) {
-		createPropSymbols(response, map);
-		}
-	});
-};
-
-function createPropSymbols(data, map){
-    var attribute = "Group_";
-    //create marker options
-    var geojsonMarkerOptions = {
-        radius: 1,
-        fillColor: "#ff7800",
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8
-    };
-
-    //create a Leaflet GeoJSON layer and add it to the map
-    L.geoJson(data, {
-        pointToLayer: function (feature, latlng) {
-            var attValue = feature.properties[attribute];
-            if(attValue == "Fishes"){
-                count2 += 1;
-            }
-            //examine the attribute value to check that it is correct
-            if(attValue == "Fishes"){
-            count += 1;
-            return L.circleMarker(latlng, geojsonMarkerOptions);
-            }
+function getData(map){
+    //load the data
+    $.ajax("data/Florida_NAS.json", {
+        dataType: "json",
+        success: function(response){
+            //create a Leaflet GeoJSON layer
+            var geoJsonLayer = L.geoJson(response);
+            //create a L.markerClusterGroup layer
+            var markers = L.markerClusterGroup();
+            //add geojson to marker cluster layer
+            markers.addLayer(geoJsonLayer);
+            //add marker cluster layer to map
+            map.addLayer(markers);
         }
-    }).addTo(map);
-    console.log(count);
-    console.log(count2);
+    });
 };
+
+
 
 
 
