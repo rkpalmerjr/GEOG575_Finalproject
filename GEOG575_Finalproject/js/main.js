@@ -187,6 +187,7 @@ $(document).ready(function() {
     function createSidebar(){
         var sidebar = L.control.sidebar('sidebar').addTo(map);
         sidebar.open('home');
+        
     }
 
 	function getColor(d) {

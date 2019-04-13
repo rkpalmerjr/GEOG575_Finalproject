@@ -212,15 +212,3 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
 L.control.sidebar = function (id, options) {
     return new L.Control.Sidebar(id, options);
 };
-
-var toggleSwitch = true;
-  $(".infoButton").click(function() {
-      if(toggleSwitch){
-       $("#sidebar").css("height", "44px");
-        toggleSwitch = false;
-        
-      }else{
-        $("#sidebar").css("height", "98vh");
-        toggleSwitch = true;
-      }
-});
