@@ -6,7 +6,6 @@
   overflow: hidden;
   z-index: 2000; }
   .sidebar.collapsed {
-    height: 160px;
     width: 40px; }
   @media (min-width: 768px) {
     .sidebar {
@@ -84,7 +83,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.95);
   overflow-x: hidden;
   overflow-y: auto; }
   .sidebar-left .sidebar-content {
@@ -153,7 +152,7 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
   .sidebar.leaflet-touch {
     box-shadow: none;
-     }
+    border-right: 2px solid rgba(0, 0, 0, 0.2); }
   @media (min-width: 768px) {
     .sidebar {
       border-radius: 4px; }

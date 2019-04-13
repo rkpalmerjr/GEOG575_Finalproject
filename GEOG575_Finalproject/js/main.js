@@ -11,7 +11,10 @@ $(document).ready(function() {
 		streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
 			id: 'mapbox.streets',
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-		});
+		}),
+        imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});;
 	var categories = ['Fishes', 'Amphibians-Frogs', 'Mammals'];
 	//create the map
 	var map = L.map('mapid', {
@@ -25,7 +28,8 @@ $(document).ready(function() {
 	var baseLayers = {
 		"Light": light,
 		"Dark": dark,
-		"Streets": streets
+		"Streets": streets,
+        "Imagery": imagery
 	};
 	//add the base layers control to the map
 	L.control.layers(baseLayers).addTo(map);
