@@ -15,7 +15,16 @@ $(document).ready(function() {
         imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });;
-	var categories = ['Fishes', 'Amphibians-Frogs', 'Mammals'];
+    
+	var categories = [];
+    for (var i = 0; i < data.features.length; i++) { 
+            var newItem = data.features[i].properties.Group_;
+            if (categories.indexOf(newItem) === -1) {
+                categories.push(newItem)
+            }
+        }
+    categories.sort();
+    
 	//create the map
 	var map = L.map('mapid', {
 		center: [27.9510, -85.3444],
@@ -55,22 +64,13 @@ $(document).ready(function() {
 		};
 		var attribute = "Group_";
 		var attValue = feature.properties[attribute];
-		if (attValue == categories[0]) {
+        for(var i = 0; i < categories.length; i++){
+		if (attValue == categories[i]) {
 			geojsonMarkerOptions.fillColor = getColor(attValue);
-			geojsonMarkerOptions.tags = [categories[0]];
+			geojsonMarkerOptions.tags = [categories[i]];
 		}
-		if (attValue == categories[1]) {
-			geojsonMarkerOptions.fillColor = getColor(attValue);
-			geojsonMarkerOptions.tags = [categories[1]];
-		}
-		if (attValue == categories[2]) {
-			geojsonMarkerOptions.fillColor = getColor(attValue);
-			geojsonMarkerOptions.tags = [categories[2]];
-		}
-		//only pull the data we need because the dataset is huge and will crash otherwise a.ka. (plants)
-		if (attValue == categories[0] || attValue == categories[1] || attValue == categories[2]) {
+        }
 			return L.circleMarker(latlng, geojsonMarkerOptions);
-		}
 	};
 
 	function onEachFeature(feature, layer) {
@@ -205,6 +205,36 @@ $(document).ready(function() {
 				return '#7CFC00';
 			case categories[2]:
 				return '#FF00D1';
+            case categories[3]:
+				return '#7f15f8';
+            case categories[4]:
+				return '#5f3a61';
+            case categories[5]:
+				return '#44c6fd';
+            case categories[6]:
+				return '#86c044';
+            case categories[7]:
+				return '#b4b391';
+            case categories[8]:
+				return '#43bab7';
+            case categories[9]:
+				return '#c19292';
+            case categories[10]:
+				return '#9d0715';
+            case categories[11]:
+				return '#fda65b';
+            case categories[12]:
+				return '#ec4374';
+            case categories[13]:
+				return '#68aa80';
+            case categories[14]:
+				return '#0c28b7';
+            case categories[15]:
+				return '#92b7d2';
+            case categories[16]:
+				return '#184544';
+            case categories[17]:
+				return '#eccd3b';
 			default:
 				return 'transparent';
 		}
