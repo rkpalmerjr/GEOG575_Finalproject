@@ -42,6 +42,7 @@ $(document).ready(function() {
 	createSearch(geoJsonLayer);
 	createFilter();
     createSidebar();
+    calcTopSpecies(categories);
 	function pointToLayer(feature, latlng) {
 		var geojsonMarkerOptions = {
 			radius: 4,
@@ -182,8 +183,10 @@ $(document).ready(function() {
 			data: categories,
 			icon: '<img src="lib/leaflet/images/filter.png">',
 			filterOnEveryClick: true,
+            clearText: "<strong><i>Clear Filter<i><strong>",
 			onSelectionComplete: function(tags) {
 				updateLegend(tags);
+                calcTopSpecies(tags);
 			}
 		}).addTo(map);
 	}
@@ -206,4 +209,13 @@ $(document).ready(function() {
 				return 'transparent';
 		}
 	};
+    
+    function calcTopSpecies(tags){
+        if(tags.length > 0){
+            //all of the logic will go in here....
+        }else{
+            calcTopSpecies(categories);
+        }
+         
+    }
 });
