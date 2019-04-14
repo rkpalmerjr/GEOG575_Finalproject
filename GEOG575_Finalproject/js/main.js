@@ -212,7 +212,24 @@ $(document).ready(function() {
     
     function calcTopSpecies(tags){
         if(tags.length > 0){
-            //all of the logic will go in here....
+//            for (var i = 0; i < data.features.length; i++) { 
+//        console.log(data.features[i].properties);
+//        }
+        //species #1 html element updates.    
+        $("#spec1").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
+        .fadeIn(1000);
+        //species #2 html element updates.    
+        $("#spec2").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
+        .fadeIn(1000);
+        //species #3 html element updates.    
+        $("#spec3").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
+        .fadeIn(1000);
+        //species #4 html element updates.    
+        $("#spec4").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
+        .fadeIn(1000);
+        //species #5 html element updates.    
+        $("#spec5").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
+        .fadeIn(1000);
         }else{
             calcTopSpecies(categories);
         }
