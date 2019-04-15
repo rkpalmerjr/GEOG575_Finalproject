@@ -12,19 +12,24 @@ $(document).ready(function() {
 			id: 'mapbox.streets',
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 		}),
-        imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-});;
-    
+		imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+		});;
 	var categories = [];
-    for (var i = 0; i < data.features.length; i++) { 
-            var newItem = data.features[i].properties.Group_;
-            if (categories.indexOf(newItem) === -1) {
-                categories.push(newItem)
-            }
-        }
-    categories.sort();
-    
+	for (var i = 0; i < data.features.length; i++) {
+		var species = data.features[i].properties.Group_;
+		if (categories.indexOf(species) === -1) {
+			categories.push(species)
+		}
+	}
+	categories.sort();
+	var comNameArr = [];
+	for (var i = 0; i < data.features.length; i++) {
+		var name = data.features[i].properties.Common_Name;
+		if (comNameArr.indexOf(name) === -1) {
+			comNameArr.push(name)
+		}
+	}
 	//create the map
 	var map = L.map('mapid', {
 		center: [27.9510, -85.3444],
@@ -38,7 +43,7 @@ $(document).ready(function() {
 		"Light": light,
 		"Dark": dark,
 		"Streets": streets,
-        "Imagery": imagery
+		"Imagery": imagery
 	};
 	//add the base layers control to the map
 	L.control.layers(baseLayers).addTo(map);
@@ -50,8 +55,9 @@ $(document).ready(function() {
 	createLegend();
 	createSearch(geoJsonLayer);
 	createFilter();
-    createSidebar();
-    calcTopSpecies(categories);
+	createSidebar();
+	calcTopSpecies(categories);
+
 	function pointToLayer(feature, latlng) {
 		var geojsonMarkerOptions = {
 			radius: 4,
@@ -64,13 +70,13 @@ $(document).ready(function() {
 		};
 		var attribute = "Group_";
 		var attValue = feature.properties[attribute];
-        for(var i = 0; i < categories.length; i++){
-		if (attValue == categories[i]) {
-			geojsonMarkerOptions.fillColor = getColor(attValue);
-			geojsonMarkerOptions.tags = [categories[i]];
+		for (var i = 0; i < categories.length; i++) {
+			if (attValue == categories[i]) {
+				geojsonMarkerOptions.fillColor = getColor(attValue);
+				geojsonMarkerOptions.tags = [categories[i]];
+			}
 		}
-        }
-			return L.circleMarker(latlng, geojsonMarkerOptions);
+		return L.circleMarker(latlng, geojsonMarkerOptions);
 	};
 
 	function onEachFeature(feature, layer) {
@@ -183,19 +189,18 @@ $(document).ready(function() {
 			data: categories,
 			icon: '<img src="lib/leaflet/images/filter.png">',
 			filterOnEveryClick: true,
-            clearText: "<strong><i>Clear Filter<i><strong>",
+			clearText: "<strong><i>Clear Filter<i><strong>",
 			onSelectionComplete: function(tags) {
 				updateLegend(tags);
-                calcTopSpecies(tags);
+				calcTopSpecies(tags);
 			}
 		}).addTo(map);
 	}
-    
-    function createSidebar(){
-        var sidebar = L.control.sidebar('sidebar').addTo(map);
-        sidebar.open('home');
-        
-    }
+
+	function createSidebar() {
+		var sidebar = L.control.sidebar('sidebar').addTo(map);
+		sidebar.open('home');
+	}
 
 	function getColor(d) {
 		switch (d) {
@@ -205,64 +210,79 @@ $(document).ready(function() {
 				return '#7CFC00';
 			case categories[2]:
 				return '#FF00D1';
-            case categories[3]:
+			case categories[3]:
 				return '#7f15f8';
-            case categories[4]:
+			case categories[4]:
 				return '#5f3a61';
-            case categories[5]:
+			case categories[5]:
 				return '#44c6fd';
-            case categories[6]:
+			case categories[6]:
 				return '#86c044';
-            case categories[7]:
+			case categories[7]:
 				return '#b4b391';
-            case categories[8]:
+			case categories[8]:
 				return '#43bab7';
-            case categories[9]:
+			case categories[9]:
 				return '#c19292';
-            case categories[10]:
+			case categories[10]:
 				return '#9d0715';
-            case categories[11]:
+			case categories[11]:
 				return '#fda65b';
-            case categories[12]:
+			case categories[12]:
 				return '#ec4374';
-            case categories[13]:
+			case categories[13]:
 				return '#68aa80';
-            case categories[14]:
+			case categories[14]:
 				return '#0c28b7';
-            case categories[15]:
+			case categories[15]:
 				return '#92b7d2';
-            case categories[16]:
+			case categories[16]:
 				return '#184544';
-            case categories[17]:
+			case categories[17]:
 				return '#eccd3b';
 			default:
 				return 'transparent';
 		}
 	};
+
+	function getSpeciesCount() {
+		var arrayCount = [];
+		for (var i = 0; i < data.features.length; i++) {
+			for (var j = 0; j < comNameArr.length; j++) {
+				if (data.features[i].properties.Common_Name == comNameArr[j]) {
+					arrayCount.push(comNameArr[j]);
+				}
+			}
+		}
+		var dict = {};
+		for (var i = 0; i < comNameArr.length; i++) {
+			var getNumCount = arrayCount.reduce(function(n, val) {
+				return n + (val === comNameArr[i]);
+			}, 0);
+			dict[getNumCount] = comNameArr[i];
+		}
+		for (var key in dict) {
+			var value = dict[key];
+			console.log(key, value);
+		}
+	}
     
-    function calcTopSpecies(tags){
-        if(tags.length > 0){
-//            for (var i = 0; i < data.features.length; i++) { 
-//        console.log(data.features[i].properties);
-//        }
-        //species #1 html element updates.    
-        $("#spec1").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
-        .fadeIn(1000);
-        //species #2 html element updates.    
-        $("#spec2").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
-        .fadeIn(1000);
-        //species #3 html element updates.    
-        $("#spec3").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
-        .fadeIn(1000);
-        //species #4 html element updates.    
-        $("#spec4").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
-        .fadeIn(1000);
-        //species #5 html element updates.    
-        $("#spec5").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000)
-        .fadeIn(1000);
-        }else{
-            calcTopSpecies(categories);
-        }
-         
-    }
+
+	function calcTopSpecies(tags) {
+		getSpeciesCount()
+		if (tags.length > 0) {
+			//species #1 html element updates.    
+			$("#spec1").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			//species #2 html element updates.    
+			$("#spec2").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			//species #3 html element updates.    
+			$("#spec3").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			//species #4 html element updates.    
+			$("#spec4").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			//species #5 html element updates.    
+			$("#spec5").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+		} else {
+			calcTopSpecies(categories);
+		}
+	}
 });
