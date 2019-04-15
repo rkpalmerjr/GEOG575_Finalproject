@@ -245,7 +245,7 @@ $(document).ready(function() {
 		}
 	};
 
-	function getSpeciesCount() {
+	function getSpeciesCount(tags) {
 		var arrayCount = [];
 		for (var i = 0; i < data.features.length; i++) {
 			for (var j = 0; j < comNameArr.length; j++) {
@@ -265,11 +265,12 @@ $(document).ready(function() {
 			var value = dict[key];
 			console.log(key, value);
 		}
+        console.log(tags);
 	}
     
 
 	function calcTopSpecies(tags) {
-		getSpeciesCount()
+		getSpeciesCount(tags)
 		if (tags.length > 0) {
 			//species #1 html element updates.    
 			$("#spec1").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
