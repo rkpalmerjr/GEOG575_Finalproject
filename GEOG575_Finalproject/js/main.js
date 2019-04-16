@@ -192,7 +192,7 @@ $(document).ready(function() {
 			clearText: "<strong><i>Clear Filter<i><strong>",
 			onSelectionComplete: function(tags) {
 				updateLegend(tags);
-				calcTopSpecies(tags);
+				//calcTopSpecies(tags);
 			}
 		}).addTo(map);
 	}
@@ -245,7 +245,7 @@ $(document).ready(function() {
 		}
 	};
 
-	function getSpeciesCount(tags) {
+	function getSpeciesCount(tagsIn) {
 		var arrayCount = [];
 		for (var i = 0; i < data.features.length; i++) {
 			for (var j = 0; j < comNameArr.length; j++) {
@@ -259,31 +259,31 @@ $(document).ready(function() {
 			var getNumCount = arrayCount.reduce(function(n, val) {
 				return n + (val === comNameArr[i]);
 			}, 0);
-			dict[getNumCount] = comNameArr[i];
+			dict[comNameArr[i]] = getNumCount;
 		}
 		for (var key in dict) {
 			var value = dict[key];
-			console.log(key, value);
+			//console.log(key, value);
 		}
-        console.log(tags);
+        var props = Object.keys(dict).map(function(key) {
+  return { key: key, value: this[key] };
+}, dict);
+props.sort(function(p1, p2) { return p2.value - p1.value; });
+var topFive = props.slice(0, 5);
+        return topFive;
 	}
     
 
 	function calcTopSpecies(tags) {
-		getSpeciesCount(tags)
-		if (tags.length > 0) {
 			//species #1 html element updates.    
-			$("#spec1").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			$("#spec1").text(getSpeciesCount(tags)[0].key).fadeOut(-1000).fadeIn(1000);
 			//species #2 html element updates.    
-			$("#spec2").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			$("#spec2").text(getSpeciesCount(tags)[1].key).fadeOut(-1000).fadeIn(1000);
 			//species #3 html element updates.    
-			$("#spec3").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			$("#spec3").text(getSpeciesCount(tags)[2].key).fadeOut(-1000).fadeIn(1000);
 			//species #4 html element updates.    
-			$("#spec4").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
+			$("#spec4").text(getSpeciesCount(tags)[3].key).fadeOut(-1000).fadeIn(1000);
 			//species #5 html element updates.    
-			$("#spec5").text(data.features[Math.floor((Math.random() * 10) + 1)].properties.Common_Name).fadeOut(-1000).fadeIn(1000);
-		} else {
-			calcTopSpecies(categories);
-		}
+			$("#spec5").text(getSpeciesCount(tags)[4].key).fadeOut(-1000).fadeIn(1000);
 	}
 });
