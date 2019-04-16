@@ -265,25 +265,29 @@ $(document).ready(function() {
 			var value = dict[key];
 			//console.log(key, value);
 		}
-        var props = Object.keys(dict).map(function(key) {
-  return { key: key, value: this[key] };
-}, dict);
-props.sort(function(p1, p2) { return p2.value - p1.value; });
-var topFive = props.slice(0, 5);
-        return topFive;
+		var props = Object.keys(dict).map(function(key) {
+			return {
+				key: key,
+				value: this[key]
+			};
+		}, dict);
+		props.sort(function(p1, p2) {
+			return p2.value - p1.value;
+		});
+		var topFive = props.slice(0, 5);
+		return topFive;
 	}
-    
 
 	function calcTopSpecies(tags) {
-			//species #1 html element updates.    
-			$("#spec1").text(getSpeciesCount(tags)[0].key).fadeOut(-1000).fadeIn(1000);
-			//species #2 html element updates.    
-			$("#spec2").text(getSpeciesCount(tags)[1].key).fadeOut(-1000).fadeIn(1000);
-			//species #3 html element updates.    
-			$("#spec3").text(getSpeciesCount(tags)[2].key).fadeOut(-1000).fadeIn(1000);
-			//species #4 html element updates.    
-			$("#spec4").text(getSpeciesCount(tags)[3].key).fadeOut(-1000).fadeIn(1000);
-			//species #5 html element updates.    
-			$("#spec5").text(getSpeciesCount(tags)[4].key).fadeOut(-1000).fadeIn(1000);
+		//species #1 html element updates.    
+		$("#spec1").text(getSpeciesCount(tags)[0].key).fadeOut(-1000).fadeIn(1000);
+		//species #2 html element updates.    
+		$("#spec2").text(getSpeciesCount(tags)[1].key).fadeOut(-1000).fadeIn(1000);
+		//species #3 html element updates.    
+		$("#spec3").text(getSpeciesCount(tags)[2].key).fadeOut(-1000).fadeIn(1000);
+		//species #4 html element updates.    
+		$("#spec4").text(getSpeciesCount(tags)[3].key).fadeOut(-1000).fadeIn(1000);
+		//species #5 html element updates.    
+		$("#spec5").text(getSpeciesCount(tags)[4].key).fadeOut(-1000).fadeIn(1000);
 	}
 });
