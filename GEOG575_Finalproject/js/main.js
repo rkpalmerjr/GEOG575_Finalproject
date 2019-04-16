@@ -280,14 +280,14 @@ $(document).ready(function() {
 
 	function calcTopSpecies(tags) {
 		//species #1 html element updates.    
-		$("#spec1").text(getSpeciesCount(tags)[0].key).fadeOut(-1000).fadeIn(1000);
+		$("#spec1").text(getSpeciesCount(tags)[0].key+" "+getSpeciesCount(tags)[0].value).fadeOut(-1000).fadeIn(1000);
 		//species #2 html element updates.    
-		$("#spec2").text(getSpeciesCount(tags)[1].key).fadeOut(-1000).fadeIn(1000);
+		$("#spec2").text(getSpeciesCount(tags)[1].key+" "+getSpeciesCount(tags)[1].value).fadeOut(-1000).fadeIn(1000);
 		//species #3 html element updates.    
-		$("#spec3").text(getSpeciesCount(tags)[2].key).fadeOut(-1000).fadeIn(1000);
+		$("#spec3").text(getSpeciesCount(tags)[2].key+" "+getSpeciesCount(tags)[2].value).fadeOut(-1000).fadeIn(1000);
 		//species #4 html element updates.    
-		$("#spec4").text(getSpeciesCount(tags)[3].key).fadeOut(-1000).fadeIn(1000);
+		$("#spec4").text(getSpeciesCount(tags)[3].key+" "+getSpeciesCount(tags)[3].value).fadeOut(-1000).fadeIn(1000);
 		//species #5 html element updates.    
-		$("#spec5").text(getSpeciesCount(tags)[4].key).fadeOut(-1000).fadeIn(1000);
+		$("#spec5").text(getSpeciesCount(tags)[4].key+" "+getSpeciesCount(tags)[4].value).fadeOut(-1000).fadeIn(1000);
 	}
 });
