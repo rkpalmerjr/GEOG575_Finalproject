@@ -118,8 +118,10 @@ h5 {
     background-color: #FCFFF5;
 }
 
-#fishphoto {
-    height: 270px;
+.fishphoto {
+    max-width: 100%;
+	height: auto;
+    padding-bottom: 25px;
 
 }
 
