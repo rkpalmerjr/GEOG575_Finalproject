@@ -83,3 +83,36 @@ h5 {
     font-family: 'Lato', sans-serif;
 
 }
+
+.tab {
+    margin-left: 40px;
+}
+
+.sidebar-header {
+    background-color: #3E606F;
+}
+
+.sidebar-tabs {
+    background-color: #9E9E87;
+}
+
+.sidebar-tabs > li,
+.sidebar-tabs > ul > li {
+    color: #333;
+}
+
+.sidebar-tabs > li:hover,
+.sidebar-tabs > ul > li:hover {
+    color: #000;
+    background-color: #eee;
+}
+
+.sidebar-tabs > li.active,
+.sidebar-tabs > ul > li.active {
+    color: #3E606F;
+    background-color: #FCFFF5;
+}
+
+.sidebar-content {
+    background-color: #FCFFF5;
+}
