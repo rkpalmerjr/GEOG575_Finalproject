@@ -4,18 +4,17 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Invasive Species of Florida</title>
+    <title>Invasive Aquatic Species of Florida</title>
     <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
     <link href="css/leaflet.css" rel="stylesheet">
     <link href="css/leaflet-easy-button.css" rel="stylesheet">
     <link href="css/leaflet-tag-filter-button.css" rel="stylesheet">
     <link href="css/ripple.min.css" rel="stylesheet">
     <link href="css/leaflet-search.css" rel="stylesheet">
     <link href="css/leaflet-sidebar.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -27,10 +26,10 @@
                     <a href="#home" role="tab"><i class="fas fa-bars"></i></a>
                 </li>
                 <li>
-                    <a href="#option1" role="tab"><i class="fas fa-archive"></i></a>
+                    <a href="#option1" role="tab"><i class="fas fa-heart"></i></a>
                 </li>
                 <li>
-                    <a href="#option2" role="tab"><i class="fa fa-heart"></i></a>
+                    <a href="#option2" role="tab"><i class="fa fa-archive"></i></a>
                 </li>
                 <li>
                     <a href="#option3" role="tab"><i class="fa fa-exclamation-triangle"></i></a>
@@ -44,7 +43,32 @@
         </div><!-- Tab panes -->
         <div class="sidebar-content">
             <div class="sidebar-pane" id="home">
-                <h1 class="sidebar-header">Invasive Species of Florida <span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1><br>
+                <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1><br>
+                <div id="fishphoto"> <img src="images/Lionfish.jpg" alt="graphic" class="img-responsive img-rounded" width="425" margin-right="5px"></div>
+
+                <h5 class="summary"> Due to the hospitable climate and port cities, invasive species cause a bigger problem in Florida than anywhere else in the continental US. These invasive species negatively impact native wildlife, cause costly destruction and pose a threat to human health and safety. </h5>
+                <h2 class="prevent">How to Help and Prevent</h2>
+                <p>
+                    <b>DON'T</b> release your pet into the wild.
+                    <p class="tab"> Contact a pet store for proper handling</p>
+                    <p class="tab">Trade with another pet owner</p>
+                    <p class="tab">Donate to local aquarium or nature center</p>
+                    <p class="tab">Check when Exotic Pet Amnesty day is </p>
+                    <p><b>IDENTIFY</b> and <b>REPORT</b> sightings. </p>
+                    <p class="tab">Take a photo, report location (GPS coordinates are best) and list the date you saw the species. </p>
+                    <p class="tab">App: IveGOTONE </p>
+                    <p class="tab">Website: <a href="iveGot1.org" target="_blank">iveGot1.org</a> </p>
+                    <p class="tab"> Call hotline: 888-Ive-Got1 (483-4681) </p>
+                    <p> <b>CHECK </b> boat trailers, boat hulls and propellers. </p>
+                    <p class="tab"> Rinse and remove any hitchhikers such as snails or mussels.</p>
+
+                    <p><b>Helpful links:</b> </p>
+                    <p> <a href="http://ufwildlife.ifas.ufl.edu" target="_blank">http://ufwildlife.ifas.ufl.edu</a> </p>
+                    <p><a href="https://www.floridainvasives.org/" target="_blank">https://www.floridainvasives.org/</a> </p>
+
+            </div>
+            <div class="sidebar-pane" id="option1">
+                <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>Top 5 Invasive Species</h2>
                 <h5>Species #1</h5>
                 <p id="spec1"></p>
@@ -56,44 +80,22 @@
                 <p id="spec4"></p>
                 <h5>Species #5</h5>
                 <p id="spec5"></p>
-                <h5> Due to the hospitable climate and port cities in Florida, invasive species cause a bigger problem in Florida than anywhere else in the continental US. These invasive species negatively impact native wildlife, cause costly destruction and pose a threat to human health and safety. </h5>
-                <h2>How to Help and Prevent</h2>
-                <p>
-                    <b>DON'T</b> release your pet into the wild.
-                    <p class="tab"> Contact a pet store for proper handling</p>
-                    <p class="tab">Trade with another pet owner</p>
-                    <p class="tab">Donate to local aquarium or nature center</p>
-                    <p class="tab">Check when Exotic Pet Amnesty day is </p>
-                    <p><b>IDENTIFY</b> and <b>REPORT</b> sightings </p>
-                    <p class="tab">Take a photo, report location (GPS coordinates are best) and list the date you saw the species. </p>
-                    <p class="tab">App: IveGOTONE </p>
-                    <p class="tab">Website: <a href="iveGot1.org" target="_blank">iveGot1.org</a> </p>
-                    <p class="tab"> Call hotline: 888-Ive-Got1 (483-4681) </p>
-                    <p> <b>CHECK </b> boat trailers, boat hulls and propellers. Rinse and remove any hitchhikers such as snails or mussels.</p>
-
-                    <p><b>Helpful links:</b> </p>
-                    <p> <a href="http://ufwildlife.ifas.ufl.edu" target="_blank">http://ufwildlife.ifas.ufl.edu</a> </p>
-                    <p><a href="https://www.floridainvasives.org/" target="_blank">https://www.floridainvasives.org/</a> </p>
 
 
-            </div>
-            <div class="sidebar-pane" id="option1">
-                <h1 class="sidebar-header">Invasive Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
-                <h2>Whatever we want to talk about. 1</h2>
-                <p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
+
             </div>
             <div class="sidebar-pane" id="option2">
-                <h1 class="sidebar-header">Invasive Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
+                <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>Whatever we want to talk about. 2</h2>
                 <p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
             </div>
             <div class="sidebar-pane" id="option3">
-                <h1 class="sidebar-header">Invasive Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
+                <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>Whatever we want to talk about. 3</h2>
                 <p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
             </div>
             <div class="sidebar-pane" id="option4">
-                <h1 class="sidebar-header">Invasive Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
+                <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>About this App</h2>
                 <p>This web app was designed and implemented by Bryan Garner, Sarah Grandstrand, and Kevin Palmer. Built using the Leaflet Javascript library to present a responsive and interactive web application.<br>
                     <br>

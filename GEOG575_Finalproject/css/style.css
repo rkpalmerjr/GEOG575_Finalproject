@@ -89,7 +89,8 @@ h5 {
 }
 
 .sidebar-header {
-    background-color: #3E606F;
+    background: #3E606F;
+    font-size: 1.6em;
 }
 
 .sidebar-tabs {
@@ -115,4 +116,32 @@ h5 {
 
 .sidebar-content {
     background-color: #FCFFF5;
+}
+
+#fishphoto {
+    height: 270px;
+
+}
+
+.summary {
+    text-align: center;
+}
+
+.prevent {
+    margin-top: 25px;
+    font-style: bold;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.leaflet-popup-content p {
+    margin: 0.2em 0;
+    line-height: 1.3em;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background: #414B4D;
+    color: #D1DBBD;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
 }
