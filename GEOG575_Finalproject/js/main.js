@@ -48,6 +48,10 @@ $(document).ready(function() {
 	//add the base layers control to the map
 	L.control.layers(baseLayers).addTo(map);
 	//add geoJSON data
+    var u2 = L.geoJson(watershed_u2).addTo(map);
+    var u4 = L.geoJson(watershed_u4).addTo(map);
+    var u6 = L.geoJson(watershed_u6).addTo(map);
+    var u8 = L.geoJson(watershed_u8).addTo(map);
 	var NASdata = L.geoJson(data, {
 		pointToLayer: pointToLayer,
 		onEachFeature: onEachFeature
