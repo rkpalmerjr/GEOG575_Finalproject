@@ -1,27 +1,67 @@
-$(document).ready(function () {
-    //define baselayer tilesets
-    var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
-            id: 'mapbox.streets',
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-        }),
-        dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
-            id: 'mapbox.dark',
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-        }),
-        streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
-            id: 'mapbox.streets',
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-        }),
-        imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        });;
-    var categories = []; //array for the groups in legend
-    for (var i = 0; i < data.features.length; i++) {
-        var species = data.features[i].properties.Group_;
-        if (categories.indexOf(species) === -1) {
-            categories.push(species)
-        }
-    }
+$(document).ready(function() {
+	//define baselayer tilesets
+	var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
+			id: 'mapbox.streets',
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+		}),
+		dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
+			id: 'mapbox.dark',
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+		}),
+		streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
+			id: 'mapbox.streets',
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+		}),
+		imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+		});;
+	var categories = [];
+	for (var i = 0; i < data.features.length; i++) {
+		var species = data.features[i].properties.Group_;
+		if (categories.indexOf(species) === -1) {
+			categories.push(species)
+		}
+	}
+	categories.sort();
+	var comNameArr = [];
+	for (var i = 0; i < data.features.length; i++) {
+		var name = data.features[i].properties.Common_Name;
+		if (comNameArr.indexOf(name) === -1) {
+			comNameArr.push(name)
+		}
+	}
+	//create the map
+	var map = L.map('mapid', {
+		center: [27.9510, -85.3444],
+		zoom: 7,
+		minZoom: 3,
+		maxZoom: 18,
+		layers: [light]
+	});
+	//create basylayers
+	var baseLayers = {
+		"Light": light,
+		"Dark": dark,
+		"Streets": streets,
+		"Imagery": imagery
+	};
+	//add the base layers control to the map
+	L.control.layers(baseLayers).addTo(map);
+	//add geoJSON data
+    var u2 = L.geoJson(watershed_u2).addTo(map);
+    var u4 = L.geoJson(watershed_u4).addTo(map);
+    var u6 = L.geoJson(watershed_u6).addTo(map);
+    var u8 = L.geoJson(watershed_u8).addTo(map);
+	var NASdata = L.geoJson(data, {
+		pointToLayer: pointToLayer,
+		onEachFeature: onEachFeature
+	}).addTo(map);
+	createLegend();
+	createSearch(NASdata);
+	createFilter();
+	createSidebar();
+	calcTopSpecies(categories);
+>>>>>>> dev
 
 
     categories.sort();
