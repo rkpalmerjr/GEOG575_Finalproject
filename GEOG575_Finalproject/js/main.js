@@ -48,18 +48,6 @@ $(document).ready(function() {
 	//add the base layers control to the map
 	L.control.layers(baseLayers).addTo(map);
 	//add geoJSON data
-    $.getJSON("data/Florida_WBDHU2.json", function(WBDHU2) {
-		var WBDHU2 = L.geoJson(WBDHU2).addTo(map);
-	});
-    $.getJSON("data/Florida_WBDHU4.json", function(WBDHU4) {
-		var WBDHU4 = L.geoJson(WBDHU4).addTo(map);
-	});
-    $.getJSON("data/Florida_WBDHU6.json", function(WBDHU6) {
-		var WBDHU6 = L.geoJson(WBDHU6).addTo(map);
-	});
-    $.getJSON("data/Florida_WBDHU8.json", function(WBDHU8) {
-		var WBDHU8 = L.geoJson(WBDHU8).addTo(map);
-	});
 	var NASdata = L.geoJson(data, {
 		pointToLayer: pointToLayer,
 		onEachFeature: onEachFeature
