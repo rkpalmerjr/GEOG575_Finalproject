@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     L.Control.TagFilterButton = L.Control.extend({
 
@@ -31,7 +31,7 @@
          * Resets marker caches
          * @param update: if send as true, the @update function is called after cleaning the cache
          * */
-        resetCaches: function(update) {
+        resetCaches: function (update) {
             if (typeof update !== 'boolean')
                 update = true;
             this._invisibles = [];
@@ -45,7 +45,7 @@
          * Update markers by last selected tags
          *
          * */
-        update: function() {
+        update: function () {
             var filteredCount = this.layerSources.currentSource.hide.call(this, this.layerSources.currentSource);
             this._showFilterInfo(filteredCount);
         },
@@ -56,7 +56,7 @@
          *
          * */
         hasFiltered: function () {
-          return this._selectedTags.length > 0;
+            return this._selectedTags.length > 0;
         },
 
         /**
@@ -66,7 +66,7 @@
          * @param source reference of the new marker source. It must have name and source item
          *
          * */
-        registerCustomSource: function(source) {
+        registerCustomSource: function (source) {
             if (source.name && source.source && typeof source.source.hide === 'function') {
                 this.layerSources.sources[source.name] = source.source;
             } else {
@@ -84,8 +84,9 @@
                 "name": "pruneCluster",
                 "source": {
                     pruneCluster: pruneClusterInstance,
-                    hide: function(layerSource) {
-                        var toBeRemovedFromInvisibles = [], i, j;
+                    hide: function (layerSource) {
+                        var toBeRemovedFromInvisibles = [],
+                            i, j;
 
                         for (i = 0; i < this._invisibles.length; i++) {
                             for (j = 0; j < this._invisibles[i].data.tags.length; j++) {
@@ -97,7 +98,7 @@
                             }
                         }
 
-                        while(toBeRemovedFromInvisibles.length > 0) {
+                        while (toBeRemovedFromInvisibles.length > 0) {
                             this._invisibles.splice(toBeRemovedFromInvisibles.pop(), 1);
                         }
 
@@ -153,7 +154,7 @@
          * @param other adds another linked tagFilterButton reference to _releatedFilterButtons
          *
          * */
-        addToReleated: function(other) {
+        addToReleated: function (other) {
             if (other && other instanceof L.Control.TagFilterButton && this._releatedFilterButtons.indexOf(other) == -1) {
                 this._releatedFilterButtons.push(other);
                 return other.addToReleated(this);
@@ -167,19 +168,19 @@
          * @param other gets invisibles layers hiding by this plugin
          *
          * */
-        getInvisibles: function() {
+        getInvisibles: function () {
             return this._invisibles;
         },
 
-        _prepareLayerSources: function() {
+        _prepareLayerSources: function () {
 
             this.layerSources = new Object();
             this.layerSources["sources"] = new Object();
 
-           this.registerCustomSource({
+            this.registerCustomSource({
                 "name": "default",
                 "source": {
-                    hide: function() {
+                    hide: function () {
 
                         var releatedLayers = [];
 
@@ -187,7 +188,8 @@
                             releatedLayers = releatedLayers.concat(this._releatedFilterButtons[r].getInvisibles());
                         }
 
-                        var toBeRemovedFromInvisibles = [], i;
+                        var toBeRemovedFromInvisibles = [],
+                            i;
 
                         for (i = 0; i < this._invisibles.length; i++) {
                             if (releatedLayers.indexOf(this._invisibles[i]) == -1) {
@@ -201,7 +203,7 @@
                             }
                         }
 
-                        while(toBeRemovedFromInvisibles.length > 0) {
+                        while (toBeRemovedFromInvisibles.length > 0) {
                             this._invisibles.splice(toBeRemovedFromInvisibles.pop(), 1);
                         }
 
@@ -210,7 +212,7 @@
 
                         if (this._selectedTags.length > 0) {
 
-                            this._map.eachLayer(function(layer) {
+                            this._map.eachLayer(function (layer) {
                                 if (layer && layer.options && layer.options.tags) {
                                     totalCount++;
                                     if (releatedLayers.indexOf(layer) == -1) {
@@ -242,7 +244,7 @@
             this.layerSources.currentSource = this.layerSources.sources["default"];
         },
 
-        _showFilterInfo: function(filteredCount) {
+        _showFilterInfo: function (filteredCount) {
             if (this._selectedTags.length > 0) {
                 this._filterInfo.innerText = filteredCount.toString();
                 this._filterInfo.style.display = "";
@@ -251,17 +253,17 @@
             }
         },
 
-        _checkItem: function(item) {
+        _checkItem: function (item) {
             item.getElementsByClassName('checkbox')[0].style.display = "inline-block";
             item.dataset.checked = "checked";
         },
 
-        _uncheckItem: function(item) {
+        _uncheckItem: function (item) {
             item.dataset.checked = "";
             item.getElementsByClassName('checkbox')[0].style.display = "none";
         },
 
-        _onClickToItem: function(e) {
+        _onClickToItem: function (e) {
             L.DomEvent.stop(e);
             var li = this.element;
             var context = this.context;
@@ -275,8 +277,8 @@
             }
         },
 
-        _preparePopup: function(data) {
-            
+        _preparePopup: function (data) {
+
             this._tagEl.innerHTML = '';
 
             for (var i = 0; i < data.length; i++) {
@@ -289,35 +291,47 @@
                     text = data[i].name;
                     value = data[i].value;
                 }
-                
+
                 var checked = this._selectedTags.indexOf(value) !== -1;
                 if (checked) {
                     checkbox.style.display = "inline-block";
                     li.dataset.checked = "checked";
                 }
-                checkbox.innerHTML= "&#10004;";
+                checkbox.innerHTML = "&#10004;";
                 li.dataset.value = value;
                 a.innerText = text;
 
-                L.DomEvent.addListener(li, 'dblclick', this._onClickToItem.bind({ context: this, element: li }));
-                L.DomEvent.addListener(li, 'click', this._onClickToItem.bind({ context: this, element: li }));
-                
-                L.DomEvent.addListener(a, 'dblclick', function(e) {
-                    L.DomEvent.stop(e);
-                    this.context._onClickToItem.call(this, e);
-                }.bind({ context: this, element: li }));
+                L.DomEvent.addListener(li, 'dblclick', this._onClickToItem.bind({
+                    context: this,
+                    element: li
+                }));
+                L.DomEvent.addListener(li, 'click', this._onClickToItem.bind({
+                    context: this,
+                    element: li
+                }));
 
-                L.DomEvent.addListener(a, 'click', function(e) {
+                L.DomEvent.addListener(a, 'dblclick', function (e) {
                     L.DomEvent.stop(e);
                     this.context._onClickToItem.call(this, e);
-                }.bind({ context: this, element: li }));
+                }.bind({
+                    context: this,
+                    element: li
+                }));
+
+                L.DomEvent.addListener(a, 'click', function (e) {
+                    L.DomEvent.stop(e);
+                    this.context._onClickToItem.call(this, e);
+                }.bind({
+                    context: this,
+                    element: li
+                }));
 
 
             }
             this._container.style.display = "block";
         },
 
-        _clearSelections: function(e) {
+        _clearSelections: function (e) {
             L.DomEvent.stop(e);
             this._selectedTags = [];
             var childCount = this._tagEl.childElementCount,
@@ -338,7 +352,7 @@
             }
         },
 
-        _showTagFilterPopup: function() {
+        _showTagFilterPopup: function () {
 
             if (this._tagFilterPopupIsOpen()) {
                 return;
@@ -365,11 +379,11 @@
 
         },
 
-        _tagFilterPopupIsOpen: function() {
+        _tagFilterPopupIsOpen: function () {
             return this._container.style.display == 'block';
         },
 
-        filter: function() {
+        filter: function () {
             var checkboxContainer = (this._container.getElementsByTagName('div')[0]),
                 childCount = this._tagEl.childElementCount,
                 children = this._tagEl.children,
@@ -392,7 +406,7 @@
             }
         },
 
-        hide: function(accept) {
+        hide: function (accept) {
             if (this._container && (this._container.style.display == "none" || this._container.style.display == "")) {
                 return;
             }
@@ -404,18 +418,17 @@
             this._easyButton.button.style.display = "block";
         },
 
-        initialize: function(options) {
+        initialize: function (options) {
             this._invisibles = [];
             this._releatedFilterButtons = [];
             L.Util.setOptions(this, options || {});
             this._prepareLayerSources();
         },
 
-        addTo: function(map) {
+        addTo: function (map) {
             this._map = map;
             if (this.options.openPopupOnHover) {
-                this._easyButton = L.easyButton(this.options.icon, function() {
-                }).addTo(map);
+                this._easyButton = L.easyButton(this.options.icon, function () {}).addTo(map);
                 L.DomEvent.addListener(this._easyButton._container, 'mouseover', this._showTagFilterPopup.bind(this));
             } else {
                 this._easyButton = L.easyButton(this.options.icon, this._showTagFilterPopup.bind(this)).addTo(map);
@@ -445,14 +458,14 @@
             return this;
         },
 
-        onRemove: function(map) {
+        onRemove: function (map) {
             this._container.parentNode.removeChild(this._container);
             return this;
         }
 
     });
 
-    L.control.tagFilterButton = function(options) {
+    L.control.tagFilterButton = function (options) {
         return new L.Control.TagFilterButton(options);
     };
 

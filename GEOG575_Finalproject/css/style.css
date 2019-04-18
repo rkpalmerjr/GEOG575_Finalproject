@@ -53,7 +53,7 @@ body,
 
 .button:hover {
     background: #3E606F;
-    box-shadow: 0px 15px 20px rgba(62,96,111, 0.4);
+    box-shadow: 0px 15px 20px rgba(62, 96, 111, 0.4);
     color: #fff;
     transform: translateY(-7px);
     text-decoration: none;
@@ -74,13 +74,22 @@ h2 {
 
 }
 
+h4 {
+    font-family: 'Lato', sans-serif;
+
+}
+
 h5 {
     font-family: 'Lato', sans-serif;
 
 }
 
 .tab {
-    margin-left: 40px;
+    margin-left: 55px;
+}
+
+.helpimg {
+    margin-right: 5px;
 }
 
 .sidebar-header {
@@ -115,7 +124,7 @@ h5 {
 
 .fishphoto {
     max-width: 100%;
-	height: auto;
+    height: auto;
     padding-bottom: 25px;
 
 }
@@ -129,6 +138,15 @@ h5 {
     font-style: bold;
     font-weight: 700;
     margin-bottom: 15px;
+    color: #3E606F;
+}
+
+.helpfulLinks {
+    color: #3E606F;
+    font-style: bold;
+    font-weight: 700;
+    margin-top: 35px;
+
 }
 
 .leaflet-popup-content p {
