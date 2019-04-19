@@ -1,5 +1,3 @@
-/*Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019*/
-
 $(document).ready(function () {
     //define baselayer tilesets
     var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
@@ -40,20 +38,13 @@ $(document).ready(function () {
         maxZoom: 18,
         layers: [light]
     });
-    //create basylayers
-    var baseLayers = {
-        "Light": light,
-        "Dark": dark,
-        "Streets": streets,
-        "Imagery": imagery
-    };
-    //add the base layers control to the map
-    L.control.layers(baseLayers).addTo(map);
-    //add geoJSON data
-    var u2 = L.geoJson(watershed_u2).addTo(map);
-    var u4 = L.geoJson(watershed_u4).addTo(map);
-    var u6 = L.geoJson(watershed_u6).addTo(map);
-    var u8 = L.geoJson(watershed_u8).addTo(map);
+     //add geoJSON data
+     var statefl = L.geoJson(flstate);
+    var countiesfl = L.geoJson(flcounties);
+    var u2 = L.geoJson(watershed_u2);
+    var u4 = L.geoJson(watershed_u4);
+    var u6 = L.geoJson(watershed_u6);
+    var u8 = L.geoJson(watershed_u8);
     var NASdata = L.geoJson(data, {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
@@ -63,7 +54,35 @@ $(document).ready(function () {
     createFilter();
     createSidebar();
     calcTopSpecies(categories);
-
+    
+    //create basylayers
+    var baseLayers = {
+        "Light": light,
+        "Dark": dark,
+        "Streets": streets,
+        "Imagery": imagery
+    };
+     //create layers
+    var additionalLayers = {
+        "State": statefl,
+        "Counties": countiesfl,
+        "HU8": u8,
+        "HU6": u6,
+        "HU4": u4,
+        "HU2": u2
+    };
+    //add the base layers control to the map
+    L.control.layers(baseLayers, additionalLayers).addTo(map);
+    //draw layers behind points
+    map.on("overlayadd", function (event) {
+	u8.bringToBack();
+    u6.bringToBack();
+    u4.bringToBack();
+    u2.bringToBack();
+    statefl.bringToBack();
+    countiesfl.bringToBack();
+});
+   
     function pointToLayer(feature, latlng) {
         var geojsonMarkerOptions = {
             radius: 4,
