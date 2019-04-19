@@ -38,9 +38,10 @@ $(document).ready(function () {
         maxZoom: 18,
         layers: [light]
     });
+
      //add geoJSON data
-     var statefl = L.geoJson(flstate);
-    var countiesfl = L.geoJson(flcounties);
+    var statefl = L.geoJson(flstate, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
+    var countiesfl = L.geoJson(flcounties, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
     var u2 = L.geoJson(watershed_u2);
     var u4 = L.geoJson(watershed_u4);
     var u6 = L.geoJson(watershed_u6);
