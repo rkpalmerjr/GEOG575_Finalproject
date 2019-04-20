@@ -1,6 +1,7 @@
+ <!-- Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019
+ UW-Madison, GEOG-576, Spring 2019 -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -17,11 +18,11 @@
     <link href="css/leaflet-sidebar.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="sidebar collapsed" id="sidebar">
         <!-- Nav tabs -->
         <div class="sidebar-tabs">
+            <!-- Upper tabs -->
             <ul role="tablist">
                 <li>
                     <a href="#home" role="tab"><i class="fas fa-bars"></i></a>
@@ -36,21 +37,22 @@
                     <a href="#option3" role="tab"><i class="fa fa-exclamation-triangle"></i></a>
                 </li>
             </ul>
+            <!-- Lower info tab -->
             <ul role="tablist">
                 <li>
                     <a href="#option4" role="tab"><i class="fa fa-info-circle"></i></a>
                 </li>
             </ul>
-        </div><!-- Tab panes -->
+        </div>
+        <!-- Tab panes -->
         <div class="sidebar-content">
+            <!-- Tab pane 1 -->
             <div class="sidebar-pane" id="home">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1><br>
                 <img class="fishphoto" src="images/Lionfish.jpg" alt="Lionfish Photo">
-
                 <h5 class="summary"> Due to the hospitable climate and port cities, invasive species cause a bigger problem in Florida than anywhere else in the continental US. These invasive species negatively impact native wildlife, cause costly destruction and pose a threat to human health and safety. </h5>
                 <h2 class="prevent">How to Help and Prevent</h2>
                 <p><img class="helpimg" src="images/release2.svg" /><b>DON'T</b> release your pet into the wild.</p>
-
                 <p class="tab"> Contact a pet store for proper handling</p>
                 <p class="tab">Trade with another pet owner</p>
                 <p class="tab"> Donate to local aquarium or nature center</p>
@@ -62,12 +64,11 @@
                 <p class="tab"><u>Call Hotline</u>: 888-Ive-Got1 (483-4681) </p>
                 <p><img class="helpimg" src="images/boat.svg" /> <b>CHECK </b> boat trailers, boat hulls and propellers. </p>
                 <p class="tab"> Rinse and remove any hitchhikers such as snails or mussels.</p>
-
                 <h4 class="helpfulLinks">Helpful links:</h4>
                 <p> <a href="http://ufwildlife.ifas.ufl.edu" target="_blank">http://ufwildlife.ifas.ufl.edu</a> <br>
                     <a href="https://www.floridainvasives.org/" target="_blank">https://www.floridainvasives.org/</a> </p>
-
             </div>
+            <!-- Tab pane 2 -->
             <div class="sidebar-pane" id="option1">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>Top 5 Invasive Species</h2>
@@ -82,16 +83,19 @@
                 <h5>Species #5</h5>
                 <p id="spec5"></p>
             </div>
+            <!-- Tab pane 3 -->
             <div class="sidebar-pane" id="option2">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>Whatever we want to talk about. 2</h2>
                 <p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
             </div>
+            <!-- Tab pane 4 -->
             <div class="sidebar-pane" id="option3">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>Whatever we want to talk about. 3</h2>
                 <p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
             </div>
+            <!-- Lower info/about tab pane -->
             <div class="sidebar-pane" id="option4">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>About this App</h2>
@@ -128,43 +132,26 @@
         </div>
     </div>
     <div class="sidebar-map" id="mapid"></div>
-    <script src="data/Florida_NAS.json" type="text/javascript">
-    </script>
-    <script src="data/FLcounties.json" type="text/javascript">
-    </script>
-    <script src="data/FLstate.json" type="text/javascript">
-    </script>
-    <script src="data/Florida_WBDHU2.json" type="text/javascript">
-    </script>
-    <script src="data/Florida_WBDHU4.json" type="text/javascript">
-    </script>
-    <script src="data/Florida_WBDHU6.json" type="text/javascript">
-    </script>
-    <script src="data/Florida_WBDHU8.json" type="text/javascript">
-    </script>
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js">
-    </script>
-    <script src="js/jquery.min.js">
-    </script>
-    <script src="js/popper.min.js">
-    </script>
-    <script src="lib/leaflet/leaflet-src.js" type="text/javascript">
-    </script>
-    <script src="lib/leaflet/leaflet-easy-button.js">
-    </script>
-    <script src="lib/leaflet/leaflet-search.js">
-    </script>
-    <script src="lib/leaflet/leaflet-tag-filter-button.js">
-    </script>
-    <script src="lib/leaflet/leaflet-sidebar.js">
-    </script>
-    <script src="lib/leaflet/jquery-sidebar.js">
-    </script>
-    <script src="js/jquery.min.js" type="text/javascript">
-    </script>
-    <script src="js/main.js" type="text/javascript">
-    </script>
+    <!-- Data -->
+    <script src="data/Florida_NAS.json" type="text/javascript"></script>
+    <script src="data/FLcounties.json" type="text/javascript"></script>
+    <script src="data/FLstate.json" type="text/javascript"></script>
+    <script src="data/Florida_WBDHU2.json" type="text/javascript"></script>
+    <script src="data/Florida_WBDHU4.json" type="text/javascript"></script>
+    <script src="data/Florida_WBDHU6.json" type="text/javascript"></script>
+    <script src="data/Florida_WBDHU8.json" type="text/javascript"></script>
+    <!-- External script links -->
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="lib/leaflet/leaflet-src.js" type="text/javascript"></script>
+    <script src="lib/leaflet/leaflet-easy-button.js"></script>
+    <script src="lib/leaflet/leaflet-search.js"></script>
+    <script src="lib/leaflet/leaflet-tag-filter-button.js"></script>
+    <script src="lib/leaflet/leaflet-sidebar.js"></script>
+    <script src="lib/leaflet/jquery-sidebar.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
 </body>
-
 </html>
