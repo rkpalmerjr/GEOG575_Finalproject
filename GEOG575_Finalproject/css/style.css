@@ -1,8 +1,28 @@
-html,
-body,
-#mapid {
+/* Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019
+ UW-Madison, GEOG-576, Spring 2019 */
+html, body, #mapid {
     height: 100%;
     font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+}
+
+h1 {
+    font-family: 'Lato', sans-serif;
+}
+
+h2 {
+    font-family: 'Lato', sans-serif;
+}
+
+h4 {
+    font-family: 'Lato', sans-serif;
+}
+
+h5 {
+    font-family: 'Lato', sans-serif;
 }
 
 .legend {
@@ -23,6 +43,8 @@ body,
 }
 
 .legend .circle {
+    opacity: 0.7;
+    border: 1px solid black;
     border-radius: 50%;
     width: 10px;
     height: 10px;
@@ -63,31 +85,6 @@ body,
     color: #fff;
     transform: translateY(-7px);
     text-decoration: none;
-}
-
-p {
-    font-family: 'Lato', sans-serif;
-
-}
-
-h1 {
-    font-family: 'Lato', sans-serif;
-
-}
-
-h2 {
-    font-family: 'Lato', sans-serif;
-
-}
-
-h4 {
-    font-family: 'Lato', sans-serif;
-
-}
-
-h5 {
-    font-family: 'Lato', sans-serif;
-
 }
 
 .tab {
@@ -132,7 +129,6 @@ h5 {
     max-width: 100%;
     height: auto;
     padding-bottom: 25px;
-
 }
 
 .summary {
@@ -152,7 +148,6 @@ h5 {
     font-style: bold;
     font-weight: 700;
     margin-top: 35px;
-
 }
 
 .leaflet-popup-content p {
