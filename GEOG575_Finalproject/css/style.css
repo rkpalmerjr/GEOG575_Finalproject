@@ -51,12 +51,6 @@ h5 {
     margin-top: 3px;
 }
 
-.legend .square {
-    width: 10px;
-    height: 10px;
-    margin-top: 3px;
-}
-
 .wrap {
     height: 100%;
     display: flex;
