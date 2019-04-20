@@ -1,5 +1,8 @@
-$(document).ready(function () {
-    //define baselayer tilesets
+/* Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019
+ UW-Madison, GEOG-576, Spring 2019 */
+//Initiate document function
+$(document).ready(function(){
+    //Define basemap tilesets
     var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
             id: 'mapbox.streets',
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
@@ -14,7 +17,8 @@ $(document).ready(function () {
         }),
         imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        });;
+        });
+    //Define Florida NAS data categories arrays
     var categories = [];
     for (var i = 0; i < data.features.length; i++) {
         var species = data.features[i].properties.Group_;
@@ -30,7 +34,7 @@ $(document).ready(function () {
             comNameArr.push(name)
         }
     }
-    //create the map
+    //Create the map
     var map = L.map('mapid', {
         center: [27.9510, -85.3444],
         zoom: 7,
@@ -38,38 +42,64 @@ $(document).ready(function () {
         maxZoom: 18,
         layers: [light]
     });
-    //create basylayers
-    var baseLayers = {
+    //Add polygon baselayer geoJSON data
+    var statefl = L.geoJson(flstate, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
+    var countiesfl = L.geoJson(flcounties, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
+    var u2 = L.geoJson(watershed_u2);
+    var u4 = L.geoJson(watershed_u4);
+    var u6 = L.geoJson(watershed_u6);
+    var u8 = L.geoJson(watershed_u8);
+    //Add point geoJSON data
+    var NASdata = L.geoJson(data, {
+        pointToLayer: pointToLayer,
+        onEachFeature: onEachFeature
+    }).addTo(map);
+    //Add web app features
+    createLegend();
+    createSearch(NASdata);
+    createFilter();
+    createSidebar();
+    //Run function to calculate top species in Florida NAS data
+    calcTopSpecies(categories);
+    //Create basemap tileset layers
+    var baseMaps = {
         "Light": light,
         "Dark": dark,
         "Streets": streets,
         "Imagery": imagery
     };
-    //add the base layers control to the map
-    L.control.layers(baseLayers).addTo(map);
-    //add geoJSON data
-    var u2 = L.geoJson(watershed_u2).addTo(map);
-    var u4 = L.geoJson(watershed_u4).addTo(map);
-    var u6 = L.geoJson(watershed_u6).addTo(map);
-    var u8 = L.geoJson(watershed_u8).addTo(map);
-    var NASdata = L.geoJson(data, {
-        pointToLayer: pointToLayer,
-        onEachFeature: onEachFeature
-    }).addTo(map);
-    createLegend();
-    createSearch(NASdata);
-    createFilter();
-    createSidebar();
-    calcTopSpecies(categories);
-
+    //Create polygon baselayers
+    var baseLayers = {
+        "State": statefl,
+        "Counties": countiesfl,
+        "HU8": u8,
+        "HU6": u6,
+        "HU4": u4,
+        "HU2": u2
+    };
+    //Add basemap and  baselayers control to the map
+    L.control.layers(baseMaps, baseLayers).addTo(map);
+    //Draw layers behind points
+    //KP NOTE:  I think I can re-write this section if I have time to create a set layer order.  I did this on Lab 1.
+    map.on("overlayadd", function (event) {
+	u8.bringToBack();
+    u6.bringToBack();
+    u4.bringToBack();
+    u2.bringToBack();
+    statefl.bringToBack();
+    countiesfl.bringToBack();
+});
+//FUNCTIONS...
+    //
     function pointToLayer(feature, latlng) {
         var geojsonMarkerOptions = {
             radius: 4,
             fillColor: "",
             color: "#000",
+            stroke: 1,
             weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8,
+            opacity: 0.5,
+            fillOpacity: 0.7,
             tags: ['']
         };
         var attribute = "Group_";
@@ -82,7 +112,7 @@ $(document).ready(function () {
         }
         return L.circleMarker(latlng, geojsonMarkerOptions);
     };
-
+    //Create popups on each feature function
     function onEachFeature(feature, layer) {
         var popupContent = "<p><b>Common Name:</b> " + feature.properties.Common_Name + "</p>"
         popupContent += "<p><b>Group:</b> " + feature.properties.Group_ + "</p>"
@@ -104,12 +134,12 @@ $(document).ready(function () {
             }
         });
     }
-    // create legend function
+    //Create legend function
     function createLegend() {
         $("div.info.legend.leaflet-control").remove();
-        // container
+        //Container
         var div = L.DomUtil.create('div', 'info legend');
-        // make control
+        //Make control
         var LegendControl = L.Control.extend({
             options: {
                 position: 'bottomright'
@@ -125,7 +155,7 @@ $(document).ready(function () {
         });
         map.addControl(new LegendControl());
     }
-    // create legend function
+    //Update legend function
     function updateLegend(tags) {
         if (tags.length > 0) {
             $("div.info.legend.leaflet-control").remove();
@@ -150,7 +180,7 @@ $(document).ready(function () {
             createLegend();
         }
     }
-
+    //Create search bar function
     function createSearch(featuresLayer) {
         var searchControl = new L.Control.Search({
             layer: featuresLayer,
@@ -171,7 +201,7 @@ $(document).ready(function () {
             position: 'topleft',
             hideMarkerOnCollapse: true,
         });
-        // open result marker popup
+        //Open result marker popup
         searchControl.on('search:locationfound', function (e) {
             if (e.layer._popup) {
                 let popup = e.layer.getPopup();
@@ -180,7 +210,7 @@ $(document).ready(function () {
                 });
                 e.layer.openPopup();
             }
-            // restore original style on popup close
+            //Restore original style on popup close
         }).on('search:collapsed', function (e) {
             featuresLayer.eachLayer(function (layer) {
                 featuresLayer.resetStyle(layer);
@@ -188,7 +218,7 @@ $(document).ready(function () {
         });
         map.addControl(searchControl);
     }
-
+    //Create point filter by category function
     function createFilter() {
         L.control.tagFilterButton({
             data: categories,
@@ -197,16 +227,16 @@ $(document).ready(function () {
             clearText: "<strong><i>Clear Filter<i><strong>",
             onSelectionComplete: function (tags) {
                 updateLegend(tags);
-                //calcTopSpecies(tags);
+                //CalcTopSpecies(tags);
             }
         }).addTo(map);
     }
-
+    //Create sidebar function
     function createSidebar() {
         var sidebar = L.control.sidebar('sidebar').addTo(map);
         sidebar.open('home');
     }
-
+    //Create point symbol colors function
     function getColor(d) {
         switch (d) {
             case categories[0]:
@@ -243,13 +273,11 @@ $(document).ready(function () {
                 return '#86c044';
             case categories[16]:
                 return '#c7e9b4';
-            case categories[17]: //does this need to be here? plants category? 
-                return '#ec4374';
             default:
                 return 'transparent';
         }
     };
-
+    //Get species count per common name function
     function getSpeciesCount(tagsIn) {
         var arrayCount = [];
         for (var i = 0; i < data.features.length; i++) {
@@ -282,17 +310,17 @@ $(document).ready(function () {
         var topFive = props.slice(0, 5);
         return topFive;
     }
-
+    //Calculate the top (most prevalent) invasive species function from species count
     function calcTopSpecies(tags) {
-        //species #1 html element updates.    
+        //Species #1 html element updates.
         $("#spec1").text(getSpeciesCount(tags)[0].key + " " + getSpeciesCount(tags)[0].value).fadeOut(-1000).fadeIn(1000);
-        //species #2 html element updates.    
+        //Species #2 html element updates.
         $("#spec2").text(getSpeciesCount(tags)[1].key + " " + getSpeciesCount(tags)[1].value).fadeOut(-1000).fadeIn(1000);
-        //species #3 html element updates.    
+        //Species #3 html element updates.
         $("#spec3").text(getSpeciesCount(tags)[2].key + " " + getSpeciesCount(tags)[2].value).fadeOut(-1000).fadeIn(1000);
-        //species #4 html element updates.    
+        //Species #4 html element updates.
         $("#spec4").text(getSpeciesCount(tags)[3].key + " " + getSpeciesCount(tags)[3].value).fadeOut(-1000).fadeIn(1000);
-        //species #5 html element updates.    
+        //Species #5 html element updates.
         $("#spec5").text(getSpeciesCount(tags)[4].key + " " + getSpeciesCount(tags)[4].value).fadeOut(-1000).fadeIn(1000);
     }
 });
