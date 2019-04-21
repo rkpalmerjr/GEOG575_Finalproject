@@ -50,10 +50,13 @@ $(document).ready(function(){
     var u6 = L.geoJson(watershed_u6);
     var u8 = L.geoJson(watershed_u8);
     //Add point geoJSON data
-    var NASdata = L.geoJson(data, {
+    var NASdata = L.layerGroup([]);
+    L.geoJson(data, {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
-    }).addTo(map);
+    }).addTo(NASdata);
+    NASdata.addTo(map);
+    console.log(NASdata);
     //Add web app features
     createLegend();
     createSearch(NASdata);
@@ -61,6 +64,7 @@ $(document).ready(function(){
     createSidebar();
     //Run function to calculate top species in Florida NAS data
     calcTopSpecies(categories);
+/*    createSlider();*/
     //Create basemap tileset layers
     var baseMaps = {
         "Light": light,
@@ -230,6 +234,16 @@ $(document).ready(function(){
                 //CalcTopSpecies(tags);
             }
         }).addTo(map);
+    }
+    //Create point filter by time range slider
+    function createSlider() {
+        //Create a marker layer
+        console.log(NASdata);
+        var sliderControl = L.control.sliderControl({position: "bottomleft", layer: NASdata, range: true});
+        //Add the slider to the map
+        map.addControl(sliderControl);
+        //Initialize the slider
+        sliderControl.startSlider();
     }
     //Create sidebar function
     function createSidebar() {
