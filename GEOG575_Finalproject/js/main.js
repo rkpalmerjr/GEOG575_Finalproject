@@ -78,12 +78,10 @@ $(document).ready(function(){
     var u8 = L.geoJson(watershed_u8);
 
     //Add point geoJSON data
-    var NASdata = L.layerGroup([]);
-    L.geoJson(data, {
+    var NASdata = L.geoJson(data, {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
-    }).addTo(NASdata);
-    NASdata.addTo(map);
+    }).addTo(map);
     console.log(NASdata);
 
     //Add web app features
