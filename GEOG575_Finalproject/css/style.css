@@ -5,24 +5,13 @@ html, body, #mapid {
     font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-p {
+h1, h2, h3, h4, h5, p {
     font-family: 'Lato', sans-serif;
 }
 
-h1 {
-    font-family: 'Lato', sans-serif;
-}
-
-h2 {
-    font-family: 'Lato', sans-serif;
-}
-
-h4 {
-    font-family: 'Lato', sans-serif;
-}
-
-h5 {
-    font-family: 'Lato', sans-serif;
+.controlHeader {
+    font-weight: bold;
+    text-align: center;
 }
 
 .legend {
@@ -46,8 +35,8 @@ h5 {
     opacity: 0.7;
     border: 1px solid black;
     border-radius: 50%;
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
     margin-top: 3px;
 }
 
