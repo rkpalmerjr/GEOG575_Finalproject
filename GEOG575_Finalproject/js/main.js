@@ -1,23 +1,57 @@
 /* Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019
  UW-Madison, GEOG-576, Spring 2019 */
+
+//Define basemap tilesets
+var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
+        id: 'mapbox.streets',
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+    }),
+    dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
+        id: 'mapbox.dark',
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+    }),
+    streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
+        id: 'mapbox.streets',
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+    }),
+    imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
+//Create the map
+var map = L.map('mapid', {
+    center: [27.9510, -85.3444],
+    zoom: 7,
+    minZoom: 3,
+    maxZoom: 18,
+    layers: [light]
+});
+
+//Create basemap tileset layers
+var baseMaps = {
+    "Light": light,
+    "Dark": dark,
+    "Streets": streets,
+    "Imagery": imagery
+};
+
+//Add basemap control to the map
+var baseMapControl = L.control.layers(baseMaps);
+baseMapControl.id = "baseMapControl";
+baseMapControl.addTo(map);
+$('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-control-layers-base');
+
+
 //Initiate document function
 $(document).ready(function(){
-    //Define basemap tilesets
-    var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
-            id: 'mapbox.streets',
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-        }),
-        dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
-            id: 'mapbox.dark',
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-        }),
-        streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
-            id: 'mapbox.streets',
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-        }),
-        imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        });
+    console.log(data);
+    console.log(flstate);
+    console.log(flcounties);
+    console.log(watershed_u2);
+    console.log(watershed_u4);
+    console.log(watershed_u6);
+    console.log(watershed_u8);
+
     //Define Florida NAS data categories arrays
     var categories = [];
     for (var i = 0; i < data.features.length; i++) {
@@ -34,14 +68,7 @@ $(document).ready(function(){
             comNameArr.push(name)
         }
     }
-    //Create the map
-    var map = L.map('mapid', {
-        center: [27.9510, -85.3444],
-        zoom: 7,
-        minZoom: 3,
-        maxZoom: 18,
-        layers: [light]
-    });
+
     //Add polygon baselayer geoJSON data
     var statefl = L.geoJson(flstate, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
     var countiesfl = L.geoJson(flcounties, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
@@ -49,11 +76,14 @@ $(document).ready(function(){
     var u4 = L.geoJson(watershed_u4);
     var u6 = L.geoJson(watershed_u6);
     var u8 = L.geoJson(watershed_u8);
+
     //Add point geoJSON data
     var NASdata = L.geoJson(data, {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
     }).addTo(map);
+    console.log(NASdata);
+
     //Add web app features
     createLegend();
     createSearch(NASdata);
@@ -61,24 +91,24 @@ $(document).ready(function(){
     createSidebar();
     //Run function to calculate top species in Florida NAS data
     calcTopSpecies(categories);
-    //Create basemap tileset layers
-    var baseMaps = {
-        "Light": light,
-        "Dark": dark,
-        "Streets": streets,
-        "Imagery": imagery
-    };
+/*    createSlider();*/
+
     //Create polygon baselayers
     var baseLayers = {
-        "State": statefl,
-        "Counties": countiesfl,
-        "HU8": u8,
-        "HU6": u6,
-        "HU4": u4,
-        "HU2": u2
+        "State (Florida)": statefl,
+        "Counties (Florida)": countiesfl,
+        "Hydrologic Unit - HU8": u8,
+        "Hydrologic Unit - HU6": u6,
+        "Hydrologic Unit - HU4": u4,
+        "Hydrologic Unit - HU2": u2
     };
-    //Add basemap and  baselayers control to the map
-    L.control.layers(baseMaps, baseLayers).addTo(map);
+
+    //Add baselayers control to the map
+    var overlayControl = L.control.layers('',baseLayers);
+    overlayControl.id = "overlayControl";
+    overlayControl.addTo(map);
+    $('<p class = "controlHeader">Overlay Layers</p>').insertBefore('div.leaflet-control-layers-base');
+
     //Draw layers behind points
     //KP NOTE:  I think I can re-write this section if I have time to create a set layer order.  I did this on Lab 1.
     map.on("overlayadd", function (event) {
@@ -89,17 +119,19 @@ $(document).ready(function(){
     statefl.bringToBack();
     countiesfl.bringToBack();
 });
+
+
 //FUNCTIONS...
-    //
+    //Convert Florida NAS geoJSON to leaflet point markers
     function pointToLayer(feature, latlng) {
         var geojsonMarkerOptions = {
-            radius: 4,
+            radius: 3,
             fillColor: "",
             color: "#000",
             stroke: 1,
             weight: 1,
             opacity: 0.5,
-            fillOpacity: 0.7,
+            fillOpacity: 0.75,
             tags: ['']
         };
         var attribute = "Group_";
@@ -112,6 +144,7 @@ $(document).ready(function(){
         }
         return L.circleMarker(latlng, geojsonMarkerOptions);
     };
+
     //Create popups on each feature function
     function onEachFeature(feature, layer) {
         var popupContent = "<p><b>Common Name:</b> " + feature.properties.Common_Name + "</p>"
@@ -134,6 +167,7 @@ $(document).ready(function(){
             }
         });
     }
+
     //Create legend function
     function createLegend() {
         $("div.info.legend.leaflet-control").remove();
@@ -155,6 +189,7 @@ $(document).ready(function(){
         });
         map.addControl(new LegendControl());
     }
+
     //Update legend function
     function updateLegend(tags) {
         if (tags.length > 0) {
@@ -180,22 +215,23 @@ $(document).ready(function(){
             createLegend();
         }
     }
+
     //Create search bar function
     function createSearch(featuresLayer) {
         var searchControl = new L.Control.Search({
             layer: featuresLayer,
             marker: {
                 circle: {
-                    radius: 20,
+                    radius: 16,
                     color: '#FF0000',
-                    opacity: .85,
-                    weight: 6,
-                    fillOpacity: 0
+                    opacity: .25,
+                    weight: 1,
+                    fillOpacity: .25
                 },
                 icon: false,
             },
             propertyName: 'Specimen_Number',
-            zoom: 18,
+            zoom: 12,
             collapsed: true,
             textPlaceholder: 'Search Specimen Number',
             position: 'topleft',
@@ -218,6 +254,7 @@ $(document).ready(function(){
         });
         map.addControl(searchControl);
     }
+
     //Create point filter by category function
     function createFilter() {
         L.control.tagFilterButton({
@@ -231,11 +268,24 @@ $(document).ready(function(){
             }
         }).addTo(map);
     }
+
+    //Create point filter by time range slider
+    function createSlider() {
+        //Create a marker layer
+        console.log(NASdata);
+        var sliderControl = L.control.sliderControl({position: "bottomleft", layer: NASdata, range: true});
+        //Add the slider to the map
+        map.addControl(sliderControl);
+        //Initialize the slider
+        sliderControl.startSlider();
+    }
+
     //Create sidebar function
     function createSidebar() {
         var sidebar = L.control.sidebar('sidebar').addTo(map);
         sidebar.open('home');
     }
+
     //Create point symbol colors function
     function getColor(d) {
         switch (d) {
@@ -277,6 +327,7 @@ $(document).ready(function(){
                 return 'transparent';
         }
     };
+
     //Get species count per common name function
     function getSpeciesCount(tagsIn) {
         var arrayCount = [];
@@ -310,6 +361,7 @@ $(document).ready(function(){
         var topFive = props.slice(0, 5);
         return topFive;
     }
+
     //Calculate the top (most prevalent) invasive species function from species count
     function calcTopSpecies(tags) {
         //Species #1 html element updates.
