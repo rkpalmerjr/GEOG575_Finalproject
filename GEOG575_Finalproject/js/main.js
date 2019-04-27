@@ -384,17 +384,30 @@ $(document).ready(function () {
             top: 5,
             right: 35,
             bottom: 5,
-            left: 105
+            left: 104
         };
 
-        var width = 405 - margin.left - margin.right,
-            height = 200 - margin.top - margin.bottom;
+
+        var elmt = document.getElementById("home");
+        var bound = elmt.getBoundingClientRect();
+        var width = bound.width - margin.left - margin.right;
+        //    var width = elmt.offsetWidth - margin.left - margin.right;
+
+
+        var height = 200 - margin.top - margin.bottom;
+
+        console.log(bound);
+        /*      var width = 405 - margin.left - margin.right,
+                  height = 200 - margin.top - margin.bottom;       */
+
 
         var svg = d3.select("#barchart").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
 
         var x = d3.scale.linear()
             .range([0, width])
@@ -454,10 +467,9 @@ $(document).ready(function () {
         var feMerge = filter.append("feMerge");
 
         feMerge.append("feMergeNode")
-            .attr("in", "offsetBlur")
+            .attr("in", "offsetBlur");
         feMerge.append("feMergeNode")
             .attr("in", "SourceGraphic");
-
 
         //append rects
         bars.append("rect")
@@ -488,8 +500,8 @@ $(document).ready(function () {
             .text(function (d) {
                 return d.value;
             });
+    } //end bar chart
 
 
-    }
 
 });
