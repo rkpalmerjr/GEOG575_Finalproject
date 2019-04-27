@@ -44,14 +44,6 @@ $('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-c
 
 //Initiate document function
 $(document).ready(function () {
-    console.log(data);
-    console.log(flstate);
-    console.log(flcounties);
-    console.log(watershed_u2);
-    console.log(watershed_u4);
-    console.log(watershed_u6);
-    console.log(watershed_u8);
-
     //Define Florida NAS data categories arrays
     var categories = [];
     for (var i = 0; i < data.features.length; i++) {
@@ -90,7 +82,6 @@ $(document).ready(function () {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
     }).addTo(map);
-    console.log(NASdata);
 
     //Add web app features
     createLegend();
@@ -342,7 +333,7 @@ $(document).ready(function () {
     };
 
     //Get species count per common name function
-    function getSpeciesCount(tagsIn) {
+    function getSpeciesCount() {
         var arrayCount = [];
         for (var i = 0; i < data.features.length; i++) {
             for (var j = 0; j < comNameArr.length; j++) {
@@ -360,7 +351,6 @@ $(document).ready(function () {
         }
         for (var key in dict) {
             var value = dict[key];
-            //console.log(key, value);
         }
         var props = Object.keys(dict).map(function (key) {
             return {
@@ -372,26 +362,26 @@ $(document).ready(function () {
             return p2.value - p1.value;
         });
         var topFive = props.slice(0, 5);
-        console.log(topFive); //gives several arrays of top 5 with key and value
         return topFive;
     }
 
     //Calculate the top (most prevalent) invasive species function from species count
-    function calcTopSpecies(tags) {
+    function calcTopSpecies() {
         //Species #1 html element updates.
-        $("#spec1").text(getSpeciesCount(tags)[0].key).fadeOut(-1000).fadeIn(1000);
+        $("#spec1").text(getSpeciesCount()[0].key);
         //Species #2 html element updates.
-        $("#spec2").text(getSpeciesCount(tags)[1].key).fadeOut(-1000).fadeIn(1000);
+        $("#spec2").text(getSpeciesCount()[1].key);
         //Species #3 html element updates.
-        $("#spec3").text(getSpeciesCount(tags)[2].key).fadeOut(-1000).fadeIn(1000);
+        $("#spec3").text(getSpeciesCount()[2].key);
         //Species #4 html element updates.
-        $("#spec4").text(getSpeciesCount(tags)[3].key).fadeOut(-1000).fadeIn(1000);
+        $("#spec4").text(getSpeciesCount()[3].key);
         //Species #5 html element updates.
-        $("#spec5").text(getSpeciesCount(tags)[4].key).fadeOut(-1000).fadeIn(1000);
+        $("#spec5").text(getSpeciesCount()[4].key);
     }
 
-    function barChart(data) {
-        var data = getSpeciesCount(data);
+    function barChart() {
+        var data = getSpeciesCount();
+        console.log(data);
         //sort bars based on value
         data = data.sort(function (a, b) {
             return d3.ascending(a.value, b.value);
