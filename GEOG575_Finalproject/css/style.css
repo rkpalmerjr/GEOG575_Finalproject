@@ -122,7 +122,8 @@ p {
 }
 
 .summary {
-    text-align: center;
+    text-align: left;
+    text-indent: 25px;
 }
 
 .prevent {
@@ -153,7 +154,7 @@ p {
 
 /*bar chart style */
 .axis {
-    font-size: 13px;
+    font-size: 1em;
     fill: #555;
     outline-color: #FCFFF5;
     text-shadow: 0 0 3px #BDBD9E;
@@ -168,17 +169,37 @@ p {
 .label {
     font-size: 12px;
     fill: #FCFFF5;
-    
 }
 
 .bar {
     fill: #3E606F;
+
 }
 
-#barchart {
-    margin-top: 20px;
-    margin-bottom: 20px;
+/*#barchart {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: top;
+    overflow: hidden;
 }
+
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+*/
+#barchart {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+
+}
+
 
 /* end bar chart style */
 
@@ -227,6 +248,11 @@ p {
 .topspectext {
     font-style: italic;
 }
-.tick{
+
+.tick {
     text-transform: capitalize;
+}
+
+cite {
+    font-size: 9px;
 }
