@@ -58,7 +58,8 @@ p {
     padding: 10px;
     margin: 2px;
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 0.69em;
     color: #000;
     background-color: #fff;
     border: none;
