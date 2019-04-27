@@ -66,10 +66,18 @@ $(document).ready(function () {
         "fillOpacity": 0,
         onEachFeature: toolTipCounty
     });
-    var u2 = L.geoJson(watershed_u2);
-    var u4 = L.geoJson(watershed_u4);
-    var u6 = L.geoJson(watershed_u6);
-    var u8 = L.geoJson(watershed_u8);
+    var u2 = L.geoJson(watershed_u2, {
+        onEachFeature: toolTipWatersheds
+    });
+    var u4 = L.geoJson(watershed_u4, {
+        onEachFeature: toolTipWatersheds
+    });
+    var u6 = L.geoJson(watershed_u6, {
+        onEachFeature: toolTipWatersheds
+    });
+    var u8 = L.geoJson(watershed_u8, {
+        onEachFeature: toolTipWatersheds
+    });
 
     //Add point geoJSON data
     var NASdata = L.geoJson(data, {
@@ -487,7 +495,7 @@ $(document).ready(function () {
     } //end bar chart
 
     function toolTipCounty(feature, layer) {
-        layer.bindPopup("<p id=cnty-text >" + feature.properties.NAMELSAD + "</p>");
+        layer.bindPopup("<p class=layer-text >" + feature.properties.NAMELSAD + "</p>");
         //event listeners to open popup on hover
         layer.on({
             mouseover: function () {
@@ -499,6 +507,24 @@ $(document).ready(function () {
             'add': function () {
                 layer.bringToBack()
             }
+        });
+    }
+
+    function toolTipWatersheds(feature, layer) {
+        layer.bindPopup("<p class=layer-text>" + feature.properties.Name + "</p>");
+
+        //event listeners to open popup on hover
+        layer.on({
+            mouseover: function () {
+                this.openPopup();
+            },
+            moueout: function () {
+                this.closePopup();
+            },
+            'add': function () {
+                layer.bringToBack()
+            }
+
         });
     }
 });
