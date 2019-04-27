@@ -35,13 +35,6 @@ var baseMaps = {
     "Imagery": imagery
 };
 
-//Add basemap control to the map
-var baseMapControl = L.control.layers(baseMaps);
-baseMapControl.id = "baseMapControl";
-baseMapControl.addTo(map);
-$('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-control-layers-base');
-
-
 //Initiate document function
 $(document).ready(function () {
     //Define Florida NAS data categories arrays
@@ -104,10 +97,10 @@ $(document).ready(function () {
     };
 
     //Add baselayers control to the map
-    var overlayControl = L.control.layers('', baseLayers);
-    overlayControl.id = "overlayControl";
-    overlayControl.addTo(map);
-    $('<p class = "controlHeader">Overlay Layers</p>').insertBefore('div.leaflet-control-layers-base');
+    var layerControl = L.control.layers(baseMaps, baseLayers);
+    layerControl.addTo(map);
+    $('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-control-layers-base');
+    $('<p class = "controlHeader">Overlay Layers</p>').insertBefore('div.leaflet-control-layers-overlays');
 
     //Draw layers behind points
     //KP NOTE:  I think I can re-write this section if I have time to create a set layer order.  I did this on Lab 1.
