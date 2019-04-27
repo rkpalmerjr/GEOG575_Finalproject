@@ -43,7 +43,7 @@ $('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-c
 
 
 //Initiate document function
-$(document).ready(function(){
+$(document).ready(function () {
     console.log(data);
     console.log(flstate);
     console.log(flcounties);
@@ -70,8 +70,16 @@ $(document).ready(function(){
     }
 
     //Add polygon baselayer geoJSON data
-    var statefl = L.geoJson(flstate, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
-    var countiesfl = L.geoJson(flcounties, {"color": "#ff7800", "weight": 4, "opacity": 0.65});
+    var statefl = L.geoJson(flstate, {
+        "color": "#ff7800",
+        "weight": 4,
+        "opacity": 0.65
+    });
+    var countiesfl = L.geoJson(flcounties, {
+        "color": "#ff7800",
+        "weight": 4,
+        "opacity": 0.65
+    });
     var u2 = L.geoJson(watershed_u2);
     var u4 = L.geoJson(watershed_u4);
     var u6 = L.geoJson(watershed_u6);
@@ -91,7 +99,8 @@ $(document).ready(function(){
     createSidebar();
     //Run function to calculate top species in Florida NAS data
     calcTopSpecies(categories);
-/*    createSlider();*/
+    /*    createSlider();*/
+    barChart(categories);
 
     //Create polygon baselayers
     var baseLayers = {
@@ -104,7 +113,7 @@ $(document).ready(function(){
     };
 
     //Add baselayers control to the map
-    var overlayControl = L.control.layers('',baseLayers);
+    var overlayControl = L.control.layers('', baseLayers);
     overlayControl.id = "overlayControl";
     overlayControl.addTo(map);
     $('<p class = "controlHeader">Overlay Layers</p>').insertBefore('div.leaflet-control-layers-base');
@@ -112,16 +121,16 @@ $(document).ready(function(){
     //Draw layers behind points
     //KP NOTE:  I think I can re-write this section if I have time to create a set layer order.  I did this on Lab 1.
     map.on("overlayadd", function (event) {
-	u8.bringToBack();
-    u6.bringToBack();
-    u4.bringToBack();
-    u2.bringToBack();
-    statefl.bringToBack();
-    countiesfl.bringToBack();
-});
+        u8.bringToBack();
+        u6.bringToBack();
+        u4.bringToBack();
+        u2.bringToBack();
+        statefl.bringToBack();
+        countiesfl.bringToBack();
+    });
 
 
-//FUNCTIONS...
+    //FUNCTIONS...
     //Convert Florida NAS geoJSON to leaflet point markers
     function pointToLayer(feature, latlng) {
         var geojsonMarkerOptions = {
@@ -273,7 +282,11 @@ $(document).ready(function(){
     function createSlider() {
         //Create a marker layer
         console.log(NASdata);
-        var sliderControl = L.control.sliderControl({position: "bottomleft", layer: NASdata, range: true});
+        var sliderControl = L.control.sliderControl({
+            position: "bottomleft",
+            layer: NASdata,
+            range: true
+        });
         //Add the slider to the map
         map.addControl(sliderControl);
         //Initialize the slider
@@ -359,20 +372,141 @@ $(document).ready(function(){
             return p2.value - p1.value;
         });
         var topFive = props.slice(0, 5);
+        console.log(topFive); //gives several arrays of top 5 with key and value
         return topFive;
     }
 
     //Calculate the top (most prevalent) invasive species function from species count
     function calcTopSpecies(tags) {
         //Species #1 html element updates.
-        $("#spec1").text(getSpeciesCount(tags)[0].key + " " + getSpeciesCount(tags)[0].value).fadeOut(-1000).fadeIn(1000);
+        $("#spec1").text(getSpeciesCount(tags)[0].key).fadeOut(-1000).fadeIn(1000);
         //Species #2 html element updates.
-        $("#spec2").text(getSpeciesCount(tags)[1].key + " " + getSpeciesCount(tags)[1].value).fadeOut(-1000).fadeIn(1000);
+        $("#spec2").text(getSpeciesCount(tags)[1].key).fadeOut(-1000).fadeIn(1000);
         //Species #3 html element updates.
-        $("#spec3").text(getSpeciesCount(tags)[2].key + " " + getSpeciesCount(tags)[2].value).fadeOut(-1000).fadeIn(1000);
+        $("#spec3").text(getSpeciesCount(tags)[2].key).fadeOut(-1000).fadeIn(1000);
         //Species #4 html element updates.
-        $("#spec4").text(getSpeciesCount(tags)[3].key + " " + getSpeciesCount(tags)[3].value).fadeOut(-1000).fadeIn(1000);
+        $("#spec4").text(getSpeciesCount(tags)[3].key).fadeOut(-1000).fadeIn(1000);
         //Species #5 html element updates.
-        $("#spec5").text(getSpeciesCount(tags)[4].key + " " + getSpeciesCount(tags)[4].value).fadeOut(-1000).fadeIn(1000);
+        $("#spec5").text(getSpeciesCount(tags)[4].key).fadeOut(-1000).fadeIn(1000);
     }
+
+    function barChart(data) {
+        var data = getSpeciesCount(data);
+        //sort bars based on value
+        data = data.sort(function (a, b) {
+            return d3.ascending(a.value, b.value);
+        })
+        //set up svg using margin conventions
+        var margin = {
+            top: 5,
+            right: 35,
+            bottom: 5,
+            left: 105
+        };
+
+        var width = 405 - margin.left - margin.right,
+            height = 200 - margin.top - margin.bottom;
+
+        var svg = d3.select("#barchart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var x = d3.scale.linear()
+            .range([0, width])
+            .domain([0, d3.max(data, function (d) {
+                return d.value;
+            })]);
+
+        var y = d3.scale.ordinal()
+            .rangeRoundBands([height, 0], .1)
+            .domain(data.map(function (d) {
+                return d.key;
+            }));
+        //make y axis to show bar names
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            //no tick marks
+            .tickSize(0)
+            .orient("left");
+
+        var gy = svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+
+        var bars = svg.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("g")
+
+
+        // filters go in defs element
+        var defs = svg.append("defs");
+
+        // create filter with id #drop-shadow
+        // height=130% so that the shadow is not clipped
+        var filter = defs.append("filter")
+            .attr("id", "drop-shadow")
+            .attr("height", "130%");
+
+        // SourceAlpha refers to opacity of graphic that this filter will be applied to
+        // convolve that with a Gaussian with standard deviation 3 and store result
+        // in blur
+        filter.append("feGaussianBlur")
+            .attr("in", "SourceAlpha")
+            .attr("stdDeviation", 5)
+            .attr("result", "blur");
+
+        // translate output of Gaussian blur to the right and downwards with 2px
+        // store result in offsetBlur
+        filter.append("feOffset")
+            .attr("in", "blur")
+            .attr("dx", 5)
+            .attr("dy", 5)
+            .attr("result", "offsetBlur");
+
+        // overlay original SourceGraphic over translated blurred opacity by using
+        // feMerge filter. Order of specifying inputs is important!
+        var feMerge = filter.append("feMerge");
+
+        feMerge.append("feMergeNode")
+            .attr("in", "offsetBlur")
+        feMerge.append("feMergeNode")
+            .attr("in", "SourceGraphic");
+
+
+        //append rects
+        bars.append("rect")
+            .attr("class", "bar")
+            .attr("y", function (d) {
+                return y(d.key);
+            })
+            .attr("height", y.rangeBand())
+            .attr("x", 0)
+            .attr("width", function (d) {
+                return x(d.value);
+
+            })
+            .style("filter", "url(#drop-shadow)");
+
+        //add a value label to the right of each bar
+        bars.append("text")
+            .attr("class", "label")
+            //y position of the label is halfway down the bar
+            .attr("y", function (d) {
+                return y(d.key) + y.rangeBand() / 2 + 4;
+            })
+            //x position is 4 pixels to the from the end of the bar
+            .attr("x", function (d) {
+                return x(d.value) - 4;
+            })
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return d.value;
+            });
+
+
+    }
+
 });

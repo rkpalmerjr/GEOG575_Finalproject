@@ -1,11 +1,18 @@
 /* Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019
  UW-Madison, GEOG-576, Spring 2019 */
-html, body, #mapid {
+html,
+body,
+#mapid {
     height: 100%;
     font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-h1, h2, h3, h4, h5, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
     font-family: 'Lato', sans-serif;
 }
 
@@ -119,7 +126,6 @@ h1, h2, h3, h4, h5, p {
 }
 
 .prevent {
-    margin-top: 25px;
     font-style: bold;
     font-weight: 700;
     margin-bottom: 15px;
@@ -143,4 +149,80 @@ h1, h2, h3, h4, h5, p {
     background: #414B4D;
     color: #D1DBBD;
     box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
+/*bar chart style */
+.axis {
+    font-size: 13px;
+    fill: #555;
+    outline-color: #FCFFF5;
+    text-shadow: 0 0 3px #BDBD9E;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    display: none;
+}
+
+.label {
+    font-size: 12px;
+    fill: #FCFFF5;
+}
+
+.bar {
+    fill: #3E606F;
+}
+
+#barchart {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* end bar chart style */
+
+#spec1 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+#spec2 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+#spec2 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+#spec3 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+#spec4 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+#spec5 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+.topspec {
+    max-width: 50%;
+    height: auto;
+    padding-bottom: 10px;
+}
+
+.topspectext {
+    font-style: italic;
 }
