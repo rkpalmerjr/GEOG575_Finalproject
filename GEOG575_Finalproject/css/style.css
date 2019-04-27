@@ -40,7 +40,7 @@ p {
 
 .legend .circle {
     fill-opacity: 1;
-    border: 1px solid rgba(0,0,0,0.35);
+    border: 1px solid rgba(0, 0, 0, 0.35);
     border-radius: 50%;
     width: 7px;
     height: 7px;
@@ -120,11 +120,13 @@ p {
     max-width: 100%;
     height: auto;
     padding-bottom: 25px;
+    padding-top: 20px;
 }
 
 .summary {
-    text-align: left;
-    text-indent: 25px;
+    text-align: center;
+    text-indent: 3px;
+
 }
 
 .prevent {
@@ -258,6 +260,6 @@ cite {
     font-size: 9px;
 }
 
-#cnty-text {
+.layer-text {
     font-style: italic;
 }
