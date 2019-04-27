@@ -33,6 +33,10 @@ var baseMaps = {
     "Dark": dark,
     "Streets": streets,
     "Imagery": imagery
+    "Light Gray": light,
+    "Dark Gray": dark,
+    "OSM Streets": streets,
+    "Esri Imagery": imagery
 };
 
 //Initiate document function
@@ -56,14 +60,14 @@ $(document).ready(function () {
 
     //Add polygon baselayer geoJSON data
     var statefl = L.geoJson(flstate, {
-        "color": "#ff7800",
-        "weight": 4,
-        "opacity": 0.65
-    });
+        "color": "#000000",
+        "weight": 2,
+        "fillOpacity": 0
+    }).addTo(map);
     var countiesfl = L.geoJson(flcounties, {
-        "color": "#ff7800",
-        "weight": 4,
-        "opacity": 0.65
+        "color": "#000000",
+        "weight": .5,
+        "fillOpacity": 0
     });
     var u2 = L.geoJson(watershed_u2);
     var u4 = L.geoJson(watershed_u4);
@@ -74,7 +78,7 @@ $(document).ready(function () {
     var NASdata = L.geoJson(data, {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
-    }).addTo(map);
+    });
 
     //Add web app features
     createLegend();
@@ -83,7 +87,7 @@ $(document).ready(function () {
     createSidebar();
     //Run function to calculate top species in Florida NAS data
     calcTopSpecies(categories);
-    /*    createSlider();*/
+    //Run function to add bar chart
     barChart(categories);
 
     //Create polygon baselayers
@@ -96,7 +100,7 @@ $(document).ready(function () {
         "Hydrologic Unit - HU2": u2
     };
 
-    //Add baselayers control to the map
+    //Add layers control to the map
     var layerControl = L.control.layers(baseMaps, baseLayers);
     layerControl.addTo(map);
     $('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-control-layers-base');
@@ -120,11 +124,10 @@ $(document).ready(function () {
         var geojsonMarkerOptions = {
             radius: 3,
             fillColor: "",
-            color: "#000",
-            stroke: 1,
+            color: "#000000",
             weight: 1,
-            opacity: 0.5,
-            fillOpacity: 0.75,
+            opacity: 0.35,
+            fillOpacity: 1,
             tags: ['']
         };
         var attribute = "Group_";
@@ -260,21 +263,6 @@ $(document).ready(function () {
                 //CalcTopSpecies(tags);
             }
         }).addTo(map);
-    }
-
-    //Create point filter by time range slider
-    function createSlider() {
-        //Create a marker layer
-        console.log(NASdata);
-        var sliderControl = L.control.sliderControl({
-            position: "bottomleft",
-            layer: NASdata,
-            range: true
-        });
-        //Add the slider to the map
-        map.addControl(sliderControl);
-        //Initialize the slider
-        sliderControl.startSlider();
     }
 
     //Create sidebar function
@@ -423,7 +411,6 @@ $(document).ready(function () {
             .enter()
             .append("g")
 
-
         // filters go in defs element
         var defs = svg.append("defs");
 
@@ -488,8 +475,5 @@ $(document).ready(function () {
             .text(function (d) {
                 return d.value;
             });
-
-
     }
-
 });
