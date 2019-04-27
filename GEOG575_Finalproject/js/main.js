@@ -63,7 +63,8 @@ $(document).ready(function () {
     var countiesfl = L.geoJson(flcounties, {
         "color": "#ff7800",
         "weight": 4,
-        "opacity": 0.65
+        "opacity": 0.65,
+        onEachFeature: toolTipCounty
     });
     var u2 = L.geoJson(watershed_u2);
     var u4 = L.geoJson(watershed_u4);
@@ -502,6 +503,22 @@ $(document).ready(function () {
             });
     } //end bar chart
 
+    function toolTipCounty(feature, layer) {
+        layer.bindPopup("<p id=cnty-text >" + feature.properties.NAMELSAD + "</p>");
 
+        //event listeners to open popup on hover 
+        layer.on({
+            mouseover: function () {
+                this.openPopup();
+            },
+            moueout: function () {
+                this.closePopup();
+            },
+            'add': function () {
+                layer.bringToBack()
+            }
+
+        });
+    }
 
 });
