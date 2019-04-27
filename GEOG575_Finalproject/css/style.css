@@ -257,3 +257,7 @@ p {
 cite {
     font-size: 9px;
 }
+
+#cnty-text {
+    font-style: italic;
+}
