@@ -168,6 +168,7 @@ p {
 .label {
     font-size: 12px;
     fill: #FCFFF5;
+    
 }
 
 .bar {
@@ -225,4 +226,7 @@ p {
 
 .topspectext {
     font-style: italic;
+}
+.tick{
+    text-transform: capitalize;
 }
