@@ -1,5 +1,5 @@
 /* Bryan Garner, Sarah Grandstrand, Kevin Palmer, 2019
- UW-Madison, GEOG-576, Spring 2019 */
+ UW-Madison, GEOG-575, Spring 2019 */
 
 //Define basemap tilesets
 var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNteXRoMiIsImEiOiJjaXNmNGV0bGcwMG56MnludnhyN3Y5OHN4In0.xsZgj8hsNPzjb91F31-rYA', {
@@ -401,7 +401,6 @@ $(document).ready(function () {
     //Create bar chart
     function barChart() {
         var data = getSpeciesCount();
-        console.log(data);
         //sort bars based on value
         data = data.sort(function (a, b) {
             return d3.ascending(a.value, b.value);
@@ -510,14 +509,7 @@ $(document).ready(function () {
             pane: 'popupPane'
         };
         layer.bindPopup(customPopup,customOptions);
-        //event listeners to open popup on hover
         layer.on({
-            mouseover: function () {
-                this.openPopup();
-            },
-            mouseout: function () {
-                this.closePopup();
-            },
             'add': function () {
                 layer.bringToBack()
             }
@@ -532,14 +524,7 @@ $(document).ready(function () {
             pane: 'popupPane'
         };
         layer.bindPopup(customPopup, customOptions);
-        //event listeners to open popup on hover
         layer.on({
-            mouseover: function () {
-                this.openPopup();
-            },
-            mouseout: function () {
-                this.closePopup();
-            },
             'add': function () {
                 layer.bringToBack()
             }
