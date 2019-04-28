@@ -280,7 +280,6 @@ $(document).ready(function() {
 			clearText: "<strong><i>Clear Filter<i><strong>",
 			onSelectionComplete: function(tags) {
 				updateLegend(tags);
-				//CalcTopSpecies(tags);
 			}
 		}).addTo(map);
 	}
