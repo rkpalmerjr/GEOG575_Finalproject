@@ -27,6 +27,17 @@ var map = L.map('mapid', {
     layers: [light]
 });
 
+//Create map panes
+map.createPane("statePane").style.zIndex = 250; // between overlays and shadows
+map.createPane("countyPane").style.zIndex = 260; // between overlays and shadows
+map.createPane("hu2Pane").style.zIndex = 270; // between overlays and shadows
+map.createPane("hu4Pane").style.zIndex = 280; // between overlays and shadows
+map.createPane("hu6Pane").style.zIndex = 290; // between overlays and shadows
+map.createPane("hu8Pane").style.zIndex = 300; // between overlays and shadows
+map.createPane("markerPane").style.zIndex = 450; // between overlays and shadows
+map.createPane("popupPane").style.zIndex = 700; // between overlays and shadows
+
+
 //Create basemap tileset layers
 var baseMaps = {
     "Light Gray": light,
@@ -55,30 +66,37 @@ $(document).ready(function () {
     }
     //Add polygon baselayer geoJSON data
     var statefl = L.geoJson(flstate, {
+        pane: 'statePane',
         "color": "#000000",
         "weight": 2,
         "fillOpacity": 0
     }).addTo(map);
     var countiesfl = L.geoJson(flcounties, {
+        pane: 'countyPane',
         "color": "#000000",
         "weight": .5,
         "fillOpacity": 0,
         onEachFeature: toolTipCounty
     }).addTo(map);
-    var u2 = L.geoJson(watershed_u2, {
-        onEachFeature: toolTipWatersheds
-    });
-    var u4 = L.geoJson(watershed_u4, {
+    var u8 = L.geoJson(watershed_u8, {
+        pane: 'hu8Pane',
         onEachFeature: toolTipWatersheds
     });
     var u6 = L.geoJson(watershed_u6, {
+        pane: 'hu6Pane',
         onEachFeature: toolTipWatersheds
     });
-    var u8 = L.geoJson(watershed_u8, {
+    var u4 = L.geoJson(watershed_u4, {
+        pane: 'hu4Pane',
+        onEachFeature: toolTipWatersheds
+    });
+    var u2 = L.geoJson(watershed_u2, {
+        pane: 'hu2Pane',
         onEachFeature: toolTipWatersheds
     });
     //Add point geoJSON data
     var NASdata = L.geoJson(data, {
+        pane: 'pointPane',
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
     });
@@ -97,10 +115,10 @@ $(document).ready(function () {
     var baseLayers = {
         "State (Florida)": statefl,
         "Counties (Florida)": countiesfl,
-        "Hydrologic Unit - HU8": u8,
-        "Hydrologic Unit - HU6": u6,
+        "Hydrologic Unit - HU2": u2,
         "Hydrologic Unit - HU4": u4,
-        "Hydrologic Unit - HU2": u2
+        "Hydrologic Unit - HU6": u6,
+        "Hydrologic Unit - HU8": u8
     };
 
     //Add layers control to the map
@@ -108,17 +126,6 @@ $(document).ready(function () {
     layerControl.addTo(map);
     $('<p class = "controlHeader">Basemap Tilesets</p>').insertBefore('div.leaflet-control-layers-base');
     $('<p class = "controlHeader">Overlay Layers</p>').insertBefore('div.leaflet-control-layers-overlays');
-
-    //Draw layers behind points
-    //KP NOTE:  I think I can re-write this section if I have time to create a set layer order.  I did this on Lab 1.
-    map.on("overlayadd", function (event) {
-        u8.bringToBack();
-        u6.bringToBack();
-        u4.bringToBack();
-        u2.bringToBack();
-        statefl.bringToBack();
-        countiesfl.bringToBack();
-    });
 
 
     //FUNCTIONS...
@@ -154,7 +161,8 @@ $(document).ready(function () {
         if (feature.properties) {
             layer.bindPopup(popupContent, {
                 closeButton: false,
-                className: 'speciesPopup'
+                className: 'speciesPopup',
+                pane: 'popupPane'
             });
         }
         layer.on({
@@ -241,7 +249,8 @@ $(document).ready(function () {
             if (e.layer._popup) {
                 let popup = e.layer.getPopup();
                 e.layer.bindPopup(popup, {
-                    offset: [0, -11]
+                    offset: [0, -11],
+                    pane: 'popupPane'
                 });
                 e.layer.openPopup();
             }
@@ -471,7 +480,8 @@ $(document).ready(function () {
     function toolTipCounty(feature, layer) {
         var customPopup = feature.properties.NAMELSAD;
         var customOptions = {
-            'className' : 'custom-popup'
+            'className' : 'custom-popup',
+            pane: 'popupPane'
         };
         layer.bindPopup(customPopup,customOptions);
         //event listeners to open popup on hover
@@ -492,7 +502,8 @@ $(document).ready(function () {
     function toolTipWatersheds(feature, layer) {
         var customPopup = feature.properties.Name;
         var customOptions = {
-            'className' : 'custom-popup'
+            'className' : 'custom-popup',
+            pane: 'popupPane'
         };
         layer.bindPopup(customPopup, customOptions);
         //event listeners to open popup on hover
