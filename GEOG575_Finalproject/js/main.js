@@ -25,14 +25,14 @@ var map = L.map('mapid', {
 	layers: [light]
 });
 //Create map panes
-map.createPane("statePane").style.zIndex = 250; // between overlays and shadows
-map.createPane("countyPane").style.zIndex = 260; // between overlays and shadows
-map.createPane("hu2Pane").style.zIndex = 270; // between overlays and shadows
-map.createPane("hu4Pane").style.zIndex = 280; // between overlays and shadows
-map.createPane("hu6Pane").style.zIndex = 290; // between overlays and shadows
-map.createPane("hu8Pane").style.zIndex = 300; // between overlays and shadows
-map.createPane("markerPane").style.zIndex = 450; // between overlays and shadows
-map.createPane("popupPane").style.zIndex = 700; // between overlays and shadows
+map.createPane("statePane").style.zIndex = 250;
+map.createPane("countyPane").style.zIndex = 260;
+map.createPane("hu2Pane").style.zIndex = 270;
+map.createPane("hu4Pane").style.zIndex = 280;
+map.createPane("hu6Pane").style.zIndex = 290;
+map.createPane("hu8Pane").style.zIndex = 300;
+map.createPane("markerPane").style.zIndex = 450;
+map.createPane("popupPane").style.zIndex = 700;
 //Create basemap tileset layers
 var baseMaps = {
 	"Light Gray": light,
@@ -90,7 +90,7 @@ $(document).ready(function() {
 	});
 	//Add point geoJSON data
 	var NASdata = L.geoJson(data, {
-		pane: 'pointPane',
+		pane: 'markerPane',
 		pointToLayer: pointToLayer,
 		onEachFeature: onEachFeature
 	});
@@ -139,7 +139,7 @@ $(document).ready(function() {
 			}
 		}
 		return L.circleMarker(latlng, geojsonMarkerOptions);
-	};
+	}
 	//Create popups on each feature function
 	function onEachFeature(feature, layer) {
 		var popupContent = "<p><b>Common Name:</b> " + feature.properties.Common_Name + "</p>"
@@ -188,9 +188,9 @@ $(document).ready(function() {
 	function updateLegend(tags) {
 		if (tags.length > 0) {
 			$("div.info.legend.leaflet-control").remove();
-			// container
+			//Container
 			var div = L.DomUtil.create('div', 'info legend');
-			// make control
+			//Make control
 			var LegendControl = L.Control.extend({
 				options: {
 					position: 'bottomright'
@@ -328,7 +328,7 @@ $(document).ready(function() {
 			default:
 				return 'transparent';
 		}
-	};
+	}
 	//Get species count per common name function
 	function getSpeciesCount() {
 		var arrayCount = [];
@@ -377,11 +377,11 @@ $(document).ready(function() {
 	//Create bar chart
 	function barChart() {
 		var data = getSpeciesCount();
-		//sort bars based on value
+		//Sort bars based on value
 		data = data.sort(function(a, b) {
 			return d3.ascending(a.value, b.value);
-		})
-		//set up svg using margin conventions
+		});
+		//Set up svg using margin conventions
 		var margin = {
 			top: 5,
 			right: 35,
@@ -399,51 +399,47 @@ $(document).ready(function() {
 		var y = d3.scale.ordinal().rangeRoundBands([height, 0], .1).domain(data.map(function(d) {
 			return d.key;
 		}));
-		//make y axis to show bar names
+		//Make y axis to show bar names
 		var yAxis = d3.svg.axis().scale(y)
-			//no tick marks
+			//No tick marks
 			.tickSize(0).orient("left");
 		var gy = svg.append("g").attr("class", "y axis").call(yAxis)
 		var bars = svg.selectAll(".bar").data(data).enter().append("g")
-		// filters go in defs element
+		//Filters go in defs element
 		var defs = svg.append("defs");
-		// create filter with id #drop-shadow
-		// height=130% so that the shadow is not clipped
+		//Create filter with id #drop-shadow  Height=130% so that the shadow is not clipped
 		var filter = defs.append("filter").attr("id", "drop-shadow").attr("height", "130%");
-		// SourceAlpha refers to opacity of graphic that this filter will be applied to
-		// convolve that with a Gaussian with standard deviation 3 and store result
-		// in blur
+		//SourceAlpha refers to opacity of graphic that this filter will be applied to
+		//Convolve that with a Gaussian with standard deviation 3 and store result in blur
 		filter.append("feGaussianBlur").attr("in", "SourceAlpha").attr("stdDeviation", 5).attr("result", "blur");
-		// translate output of Gaussian blur to the right and downwards with 2px
-		// store result in offsetBlur
+		//Translate output of Gaussian blur to the right and downwards with 2px store result in offsetBlur
 		filter.append("feOffset").attr("in", "blur").attr("dx", 5).attr("dy", 5).attr("result", "offsetBlur");
-		// overlay original SourceGraphic over translated blurred opacity by using
-		// feMerge filter. Order of specifying inputs is important!
+		//Overlay original SourceGraphic over translated blurred opacity by using feMerge filter. Order of specifying inputs is important!
 		var feMerge = filter.append("feMerge");
 		feMerge.append("feMergeNode").attr("in", "offsetBlur");
 		feMerge.append("feMergeNode").attr("in", "SourceGraphic");
-		//append rects
+		//Append rects
 		bars.append("rect").attr("class", "bar").attr("y", function(d) {
 			return y(d.key);
 		}).attr("height", y.rangeBand()).attr("x", 0).attr("width", function(d) {
 			return x(d.value);
 		}).style("filter", "url(#drop-shadow)");
-		//add a value label to the right of each bar
+		//Add a value label to the right of each bar
 		bars.append("text").attr("class", "label")
-			//y position of the label is halfway down the bar
+			//Y position of the label is halfway down the bar
 			.attr("y", function(d) {
 				return y(d.key) + y.rangeBand() / 2 + 4;
 			})
-			//x position is 4 pixels to the from the end of the bar
+			//X position is 4 pixels to the from the end of the bar
 			.attr("x", function(d) {
 				return x(d.value) - 4;
 			}).attr("text-anchor", "end").text(function(d) {
 				return d.value;
 			});
-	} //end bar chart
+	}//End bar chart
 	//Create county tool tips
 	function toolTipCounty(feature, layer) {
-		var customPopup = feature.properties.NAMELSAD;
+		var customPopup = "County: " + feature.properties.NAMELSAD;
 		var customOptions = {
 			'className': 'custom-popup',
 			pane: 'popupPane'
@@ -457,7 +453,7 @@ $(document).ready(function() {
 	}
 	//Create watershed/hydrologic unit tool tips
 	function toolTipWatersheds(feature, layer) {
-		var customPopup = feature.properties.Name;
+		var customPopup = "Hydrologic Unit: " + feature.properties.Name;
 		var customOptions = {
 			'className': 'custom-popup',
 			pane: 'popupPane'
