@@ -53,7 +53,6 @@ $(document).ready(function () {
             comNameArr.push(name)
         }
     }
-
     //Add polygon baselayer geoJSON data
     var statefl = L.geoJson(flstate, {
         "color": "#000000",
@@ -65,7 +64,7 @@ $(document).ready(function () {
         "weight": .5,
         "fillOpacity": 0,
         onEachFeature: toolTipCounty
-    });
+    }).addTo(map);
     var u2 = L.geoJson(watershed_u2, {
         onEachFeature: toolTipWatersheds
     });
@@ -78,14 +77,13 @@ $(document).ready(function () {
     var u8 = L.geoJson(watershed_u8, {
         onEachFeature: toolTipWatersheds
     });
-
     //Add point geoJSON data
     var NASdata = L.geoJson(data, {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature
     });
 
-    //Add web app features
+    //Run functions to add web app features
     createLegend();
     createSearch(NASdata);
     createFilter();
@@ -365,6 +363,7 @@ $(document).ready(function () {
         $("#spec5").text(getSpeciesCount()[4].key);
     }
 
+    //Create bar chart
     function barChart() {
         var data = getSpeciesCount();
         console.log(data);
@@ -379,35 +378,20 @@ $(document).ready(function () {
             bottom: 5,
             left: 104
         };
-
-
         var elmt = document.getElementById("home");
         var bound = elmt.getBoundingClientRect();
         var width = bound.width - margin.left - margin.right;
-        //    var width = elmt.offsetWidth - margin.left - margin.right;
-
-
         var height = 200 - margin.top - margin.bottom;
-
-        console.log(bound);
-        /*      var width = 405 - margin.left - margin.right,
-                  height = 200 - margin.top - margin.bottom;       */
-
-
         var svg = d3.select("#barchart").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-
         var x = d3.scale.linear()
             .range([0, width])
             .domain([0, d3.max(data, function (d) {
                 return d.value;
             })]);
-
         var y = d3.scale.ordinal()
             .rangeRoundBands([height, 0], .1)
             .domain(data.map(function (d) {
@@ -419,25 +403,20 @@ $(document).ready(function () {
             //no tick marks
             .tickSize(0)
             .orient("left");
-
         var gy = svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
-
         var bars = svg.selectAll(".bar")
             .data(data)
             .enter()
             .append("g")
-
         // filters go in defs element
         var defs = svg.append("defs");
-
         // create filter with id #drop-shadow
         // height=130% so that the shadow is not clipped
         var filter = defs.append("filter")
             .attr("id", "drop-shadow")
             .attr("height", "130%");
-
         // SourceAlpha refers to opacity of graphic that this filter will be applied to
         // convolve that with a Gaussian with standard deviation 3 and store result
         // in blur
@@ -445,7 +424,6 @@ $(document).ready(function () {
             .attr("in", "SourceAlpha")
             .attr("stdDeviation", 5)
             .attr("result", "blur");
-
         // translate output of Gaussian blur to the right and downwards with 2px
         // store result in offsetBlur
         filter.append("feOffset")
@@ -453,16 +431,13 @@ $(document).ready(function () {
             .attr("dx", 5)
             .attr("dy", 5)
             .attr("result", "offsetBlur");
-
         // overlay original SourceGraphic over translated blurred opacity by using
         // feMerge filter. Order of specifying inputs is important!
         var feMerge = filter.append("feMerge");
-
         feMerge.append("feMergeNode")
             .attr("in", "offsetBlur");
         feMerge.append("feMergeNode")
             .attr("in", "SourceGraphic");
-
         //append rects
         bars.append("rect")
             .attr("class", "bar")
@@ -473,10 +448,8 @@ $(document).ready(function () {
             .attr("x", 0)
             .attr("width", function (d) {
                 return x(d.value);
-
             })
             .style("filter", "url(#drop-shadow)");
-
         //add a value label to the right of each bar
         bars.append("text")
             .attr("class", "label")
@@ -494,8 +467,13 @@ $(document).ready(function () {
             });
     } //end bar chart
 
+    //Create county tool tips
     function toolTipCounty(feature, layer) {
-        layer.bindPopup("<p class=layer-text >" + feature.properties.NAMELSAD + "</p>");
+        var customPopup = feature.properties.NAMELSAD;
+        var customOptions = {
+            'className' : 'custom-popup'
+        };
+        layer.bindPopup(customPopup,customOptions);
         //event listeners to open popup on hover
         layer.on({
             mouseover: function () {
@@ -510,21 +488,24 @@ $(document).ready(function () {
         });
     }
 
+    //Create watershed/hydrologic unit tool tips
     function toolTipWatersheds(feature, layer) {
-        layer.bindPopup("<p class=layer-text>" + feature.properties.Name + "</p>");
-
+        var customPopup = feature.properties.Name;
+        var customOptions = {
+            'className' : 'custom-popup'
+        };
+        layer.bindPopup(customPopup, customOptions);
         //event listeners to open popup on hover
         layer.on({
             mouseover: function () {
                 this.openPopup();
             },
-            moueout: function () {
+            mouseout: function () {
                 this.closePopup();
             },
             'add': function () {
                 layer.bringToBack()
             }
-
         });
     }
 });
