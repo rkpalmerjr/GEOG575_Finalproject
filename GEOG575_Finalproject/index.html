@@ -2,12 +2,12 @@
  UW-Madison, GEOG-576, Spring 2019 -->
  <!DOCTYPE html>
  <html lang="en">
-
  <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Invasive Aquatic Species of Florida</title>
+    <!-- CSS links -->
     <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link href="lib/bootstrap/bootstrap.css" rel="stylesheet">
@@ -20,7 +20,6 @@
     <link href="css/ripple.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-
 <body>
     <!-- Sidebar -->
     <div class="sidebar collapsed" id="sidebar">
@@ -32,16 +31,16 @@
                     <a href="#home" role="tab"><i class="fas fa-bars"></i></a>
                 </li>
                 <li>
-                    <a href="#option1" role="tab"><i class="fas fa-heart"></i></a>
+                    <a href="#top5" role="tab"><i class="fas fa-chart-bar"></i></a>
                 </li>
                 <li>
-                    <a href="#option3" role="tab"><i class="fa fa-exclamation-triangle"></i></a>
+                    <a href="#help" role="tab"><i class="fa fa-exclamation-triangle"></i></a>
                 </li>
             </ul>
             <!-- Lower info tab -->
             <ul role="tablist">
                 <li>
-                    <a href="#option4" role="tab"><i class="fa fa-info-circle"></i></a>
+                    <a href="#about" role="tab"><i class="fa fa-info-circle"></i></a>
                 </li>
             </ul>
         </div>
@@ -50,48 +49,37 @@
             <!-- Tab pane 1 -->
             <div class="sidebar-pane" id="home">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1><br>
-                <!--         <h2 style="text-align: center"> Nonindigenous Aquatic Species (NAS)</h2> -->
-
+                <h2 style="text-align: center"> Nonindigenous Aquatic Species (NAS)</h2>
                 <h5 class="summary"> Due to the hospitable climate and port cities, invasive species cause a bigger problem in Florida than anywhere else in the continental US. These invasive species negatively impact native wildlife, cause costly destruction and pose a threat to human health and safety. </h5>
                 <img class="fishphoto" src="images/Lionfish.jpg" alt="Lionfish Photo">
                 <h5 class="summary"> Based out of Gainesville, Florida the <a href="https://nas.er.usgs.gov/default.aspx" target="_blank">Nonindigenous Aquatic Species (NAS) </a>information resource defines these species as those which <i>"enter a body of water or aquatic ecosystem outside of its historic or native range.” </i> As part of the United States Geological Survey (USGS) NAS provides spatial and biogeographic accounts of invasive species for biologists, interagency groups and the general public. Data is collected from databases, scientific reports, federal and state agencies as well as public reporting. </h5>
-
             </div>
             <!-- Tab pane 2 -->
-            <div class="sidebar-pane" id="option1">
+            <div class="sidebar-pane" id="top5">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2 style="font-weight: 700">Top 5 Invasive Species</h2>
                 <p style="text-align: right; margin-bottom: 0; margin-top: 10px; fill: #555; outline-color: #FCFFF5; text-shadow: 0 0 3px #BDBD9E; font-size: 12px;"> Specimen Count</p>
-
                 <div id="barchart"> </div>
-
                 <h4>Species #1</h4>
                 <p id="spec1"></p>
                 <img class="topspec" src="images/applesnail.jpg" alt="Apple snail">
                 <p class="topspectext"> Originated from South America and can grow up to 6 inches high. Often seen with a pink egg mass containing hundreds to thousands of eggs. Their main health concern is their ability to carry parasites.<br><cite><a href="https://commons.wikimedia.org/w/index.php?curid=1840090"><i>Photo</i></a></cite> <cite><a href="https://www.usgs.gov/centers/wetland-and-aquatic-research-center-warc/science-topics/apple-snail"><i>Source</i></a></cite> </p>
-
                 <h4>Species #2</h4>
                 <p id="spec2"></p> <img class="topspec" src="images/africanjewelfish2.png" alt="African Jewel fish">
                 <p class="topspectext"> Is a type of cichlid that originated from Africa. They can be and can be found in shallow rocky or vegetated freshwater. They compete with sunfish for spawning sites and been found to have a negative effect on snail and shrimp species.<br><cite><a href="https://www.usgs.gov/centers/wetland-and-aquatic-research-center-warc/science/trojan-y-invasive-species-control-sex?qt-science_center_objects=0#qt-science_center_objects"><i>Photo</i></a></cite> <cite><a href="https://nas.er.usgs.gov/queries/factsheet.aspx?SpeciesID=457"><i>Source</i></a></cite> </p>
-
                 <h4>Species #3</h4>
                 <p id="spec3"> </p><img class="topspec" src="images/asianclam.jpg" alt="Asian Clam">
                 <p class="topspectext"> Found in sediment or buried just beneath the surface. They can clog irrigation canals, pipes and drinking water supplies costing about a billion US dollars each year. They also compete with native species for resources. <br> <cite><a href="https://nas.er.usgs.gov/queries/factsheet.aspx?speciesid=92"><i>Source</i></a></cite> </p>
-
                 <h4>Species #4</h4>
                 <p id="spec4"></p> <img class="topspec" src="images/bluetilapia.jpg" alt="Blue Tilapia">
                 <p class="topspectext"> A type of cichlid that originates from Africa and the Middle East. As oppose to centrarchids they have a single nostril on both sides of the head and a discontinuous lateral line. They compete with native species for resources and has made significant changes in the fish community structure.<br> <cite><a href="https://nas.er.usgs.gov/queries/factsheet.aspx?speciesid=463"><i>Source</i></a></cite> </p>
-
                 <h4>Species #5</h4>
                 <p id="spec5"></p> <img class="topspec" src="images/mayancichlid.jpg" alt="Mayan Cichlid">
                 <p class="topspectext"> Can be found throughout rivers, lakes, ponds, marshes and estuaries. They have a yellow to brown body with five to seven dark vertical bars and a round spot ringed by blue at the caudal fin. They have been shown to reduce native fish population in areas they are abundant by competing for resources <br> <cite><a href="https://nas.er.usgs.gov/queries/FactSheet.aspx?speciesID=453"><i>Source</i></a></cite></p>
-
             </div>
-
             <!-- Tab pane 3 -->
-            <div class="sidebar-pane" id="option3">
+            <div class="sidebar-pane" id="help">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
-
                 <h2 class="prevent">How to Help and Prevent</h2>
                 <p><img class="helpimg" src="images/release2.svg" /><b>DON'T</b> release your pet into the wild.</p>
                 <p class="tab"> Contact a pet store for proper handling</p>
@@ -108,10 +96,9 @@
                 <h4 class="helpfulLinks">Helpful links:</h4>
                 <p> <a href="http://ufwildlife.ifas.ufl.edu" target="_blank">http://ufwildlife.ifas.ufl.edu</a> <br>
                     <a href="https://www.floridainvasives.org/" target="_blank">https://www.floridainvasives.org/</a> </p>
-
             </div>
             <!-- Lower info/about tab pane -->
-            <div class="sidebar-pane" id="option4">
+            <div class="sidebar-pane" id="about">
                 <h1 class="sidebar-header">Invasive Aquatic Species of Florida <span class="sidebar-close infoButton"><i class="fa fa-caret-left"></i></span></h1><br>
                 <h2>About this App</h2>
                 <p>This web app was designed and implemented by Bryan Garner, Sarah Grandstrand, and Kevin Palmer. Built using the Leaflet Javascript library to present a responsive and interactive web application.<br>
@@ -173,5 +160,4 @@
     <script src="js/popper.min.js" type="text/javascript"></script>
     <script src="js/main.js" type="text/javascript"></script>
 </body>
-
  </html>

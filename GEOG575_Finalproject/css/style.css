@@ -155,6 +155,14 @@ p {
     box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
 }
 
+.custom-popup .leaflet-popup-content-wrapper,
+.custom-popup .leaflet-popup-tip {
+    font-weight: bold;
+    background: #D1DBBD;
+    color: #414B4D;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
 /*bar chart style */
 .axis {
     font-size: 1em;
@@ -179,22 +187,6 @@ p {
 
 }
 
-/*#barchart {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    vertical-align: top;
-    overflow: hidden;
-}
-
-.svg-content {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-*/
 #barchart {
     margin-top: 0px;
     margin-bottom: 20px;
@@ -202,9 +194,6 @@ p {
     width: 100%;
 
 }
-
-
-/* end bar chart style */
 
 #spec1 {
     font-weight: 700;
