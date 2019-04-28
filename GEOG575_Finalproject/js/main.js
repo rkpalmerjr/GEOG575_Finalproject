@@ -103,6 +103,7 @@ $(document).ready(function () {
 
     //Run functions to add web app features
     createLegend();
+    createLegendToggle();
     createSearch(NASdata);
     createFilter();
     createSidebar();
@@ -222,6 +223,31 @@ $(document).ready(function () {
             createLegend();
         }
     }
+    
+    //Create legend toggle function
+    function createLegendToggle(){
+    var toggle = L.easyButton({
+      states: [{
+        stateName: 'show-legend',
+        icon: 'fas fa-list',
+        title: 'Toggle Legend',
+        onClick: function(control) {
+          $("div.info.legend.leaflet-control").hide();
+          control.state('hide-legend');
+        }
+      }, {
+        stateName: 'hide-legend',
+        icon: 'fas fa-list',
+        title: 'Toggle Legend',
+        onClick: function(control) {
+          $("div.info.legend.leaflet-control").show();
+          control.state('show-legend');
+        }
+      }]
+    });
+    toggle.addTo(map);
+    }
+
 
     //Create search bar function
     function createSearch(featuresLayer) {
