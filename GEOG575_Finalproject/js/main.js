@@ -446,7 +446,8 @@ $(document).ready(function() {
 		var customPopup = feature.properties.NAMELSAD;
 		var customOptions = {
 			'className': 'custom-popup',
-			pane: 'popupPane'
+			pane: 'popupPane',
+            closeButton: false
 		};
 		layer.bindPopup(customPopup, customOptions);
 		layer.on({
@@ -460,7 +461,8 @@ $(document).ready(function() {
 		var customPopup = feature.properties.Name;
 		var customOptions = {
 			'className': 'custom-popup',
-			pane: 'popupPane'
+			pane: 'popupPane',
+            closeButton: false
 		};
 		layer.bindPopup(customPopup, customOptions);
 		layer.on({
