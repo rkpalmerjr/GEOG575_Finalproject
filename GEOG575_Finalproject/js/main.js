@@ -439,7 +439,7 @@ $(document).ready(function() {
 	}//End bar chart
 	//Create county tool tips
 	function toolTipCounty(feature, layer) {
-		var customPopup = "County: " + feature.properties.NAMELSAD;
+		var customPopup = feature.properties.NAMELSAD;
 		var customOptions = {
 			'className': 'custom-popup',
 			pane: 'popupPane',
